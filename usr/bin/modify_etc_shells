@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
+# modify_etc_shells 
+
+etc_shells="/etc/shells"
+temp_shells="/etc/shells.tmp"
+in_etc_shells=$(cat $etc_shells | grep ^"$2"$)
+done_something="no"
+
+if [ $1 = "--add" ]; then 
+  if [ "X"$in_etc_shells = "X" ]; then 
+    cp $etc_shells $temp_shells
+    echo $2 >> $temp_shells
+    mv $temp_shells $etc_shells
+    echo \"$2\"" added to "\"$etc_shells\""."
+    done_something="yes"
+  fi 
+fi 
+if [ $1 = "--remove" ]; then 
+	if [ ! "X"$in_etc_shells = "X" ]; then 
+    cat $etc_shells | grep -v ^"$2"$ > $temp_shells
+    mv $temp_shells $etc_shells
+    echo \"$2\"" removed from "\"$etc_shells\""."
+    done_something="yes"
+	fi 
+fi
+if [ $done_something = "no" ]; then 
+  echo "done nothing."
+fi
+

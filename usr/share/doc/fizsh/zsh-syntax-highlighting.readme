@@ -1,0 +1,11 @@
+Fizsh uses a script called "zsh-syntax-highlighting". This script is developed and maintained by Julien Nicoulaud "https://github.com/nicoulaj/zsh-syntax-highlighting". 
+
+The version of the script that this version fizsh uses was downloaded on Fri Jan  7 14:48:51 CET 2011. 
+
+Users may wish to install a more recent version of the script "zsh-syntax-highlighting". This may be done using the following command: 
+
+user@localmachine$ sudo wget --no-check-certificate --output-document=/etc/fizsh/zsh-syntax-highlighting https://github.com/nicoulaj/zsh-syntax-highlighting/raw/master/zsh-syntax-highlighting.zsh 
+
+Note that "user@localmachine$ " is a prompt. It is thus NOT part of the "sudo wget ..." command. 
+
+

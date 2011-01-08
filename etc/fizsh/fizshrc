@@ -1,0 +1,137 @@
+#!/usr/bin/env zsh 
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
+# /etc/fizsh/fizshrc
+
+# This fizshrc script intends to make zsh behave similar to fish when it comes to fish's 
+# syntax highlighting and fish's matlab-like history search. The script uses work by 
+# Peter Stephenson and Julien Nicoulaud (see the files "fizsh-history-search-backward" 
+# and "zsh-syntax-highlighting"). 
+
+# The script was tested on Linux. It may need some modifications to work on 
+# other systems. 
+
+# Written by Guido van Steen, mainly based on examples from the internet. 
+
+# Initializations 
+# 
+0=fizsh # Trick to let people check wether fizsh is running, i.e. whether $0 is "fizsh"
+FDOTDIR=~/.fizsh 
+
+unsetopt typesetsilent 
+########################################################### 
+# wellcome screen for zsh 
+function zlogin(){ 
+	echo -e 'Welcome to fizsh, the friendly interactive zshell' 
+	echo -e 'Type \033[03;32mman fizsh\033[00m for instructions on how to use fizsh' 
+} 
+zlogin 
+
+# Localisation 
+# 
+LC_ALL='en_US.UTF-8' 
+LANG='en_US.UTF-8' 
+LC_CTYPE=C 
+
+# (f)path 
+# 
+export PATH=$PATH:~/bin/:$FDOTDIR/ 
+fpath=($fpath ~ $FDOTDIR/) 
+
+# PS1 
+# 
+export GREEN="%{"$'\033[03;32m'"%}" 
+export BLACK="%{"$'\033[00m'"%}" 
+export PS1="%n@%m%F${GREEN} %~${BLACK}> %b%k%f" 
+
+# History 
+# 
+export HISTFILE=$FDOTDIR/.fizsh_history 
+export HISTSIZE=50000 
+export SAVEHIST=50000 
+
+# Append to the history file instead of overwriting it and do it immediately 
+# when a command is executed. 
+# 
+setopt appendhistory 
+setopt incappendhistory 
+
+# Avoid duplicate entries in the history file 
+# 
+setopt histignorealldups 
+
+# Initiate completion system 
+# 
+autoload -U compinit compinit 
+zmodload zsh/complist 
+
+# Enable color support of ls
+if [[ "$TERM" != "dumb" ]]; then
+    if [[ -x `which dircolors` ]]; then
+	eval `dircolors -b`
+	alias 'ls=ls --color=auto'
+    fi
+fi
+
+# Use colorized output 
+# 
+autoload -U colors && colors 
+alias grep="grep --color=auto"
+
+# Get rid of beeps 
+setopt nobeep 
+
+# When entering a nonexistent command name automatically try to find a similar one. 
+# 
+setopt correct 
+
+# Rebind keys 
+# 
+bindkey '\e[A' fizsh-history-search-backward 
+bindkey '\e[B' fizsh-history-search-forward 
+
+bindkey '\e[C' forward-char 
+bindkey '\e[D' backward-char 
+bindkey '\e[3~' delete-char 
+bindkey '^?' backward-delete-char 
+bindkey '^[OH' beginning-of-line 
+bindkey '^[OF' end-of-line 
+bindkey '\e[1;5C' forward-word 
+bindkey '\e[1;5D' backward-word 
+
+bindkey '\e[5~' beginning-of-history # page up 
+bindkey '\e[6~' end-of-history # page down 
+
+bindkey '^r' history-incremental-search-backward 
+bindkey '^s' history-incremental-search-forward 
+
+autoload -U fizsh-history-search-backward 
+zle -N fizsh-history-search-forward fizsh-history-search-backward 
+zle -N fizsh-history-search-backward 
+
+# disable ctrl-d to logout 
+# 
+setopt IGNORE_EOF 
+function zlogout(){ 
+	if [[ $BUFFER = "" ]]; then 
+		echo '' 
+		echo '' 
+		echo -en 'Goodbye' 
+		exit 
+	fi 
+} 
+zle -N zlogout 
+bindkey '^D' zlogout 
+
+source $FDOTDIR/zsh-syntax-highlighting 
+
+source $FDOTDIR/.fizshrc 
+
+if [[ $OLD_ZDOTDIR == "" ]]; then
+  export ZDOTDIR=$HOME
+else
+  export ZDOTDIR=$OLD_ZDOTDIR
+fi
+
+

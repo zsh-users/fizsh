@@ -1,0 +1,95 @@
+#!/usr/bin/env zsh
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+# 
+# /etc/fizsh/fizsh-history-search-backward
+
+# can also be used as the widget fizsh-history-search-forward
+# 
+# Original version written by Peter Stephenson
+# he called his version "history-substring-search-backward"
+
+# Modifications by Guido van Steen
+
+emulate -L zsh
+setopt extendedglob
+
+zmodload -i zsh/parameter
+
+ordinary_cycling_on=0
+
+if [[ $LASTWIDGET != fizsh-history-search-* ]]; then # initiate the search process 
+	# set the type of highlighting
+	my_highlight="bg=magenta,fg=white,bold"
+	# for the purpose of highlighting we will also keep a version without doubly-escaped meta characters  
+	search4later=${BUFFER}
+	# put an extra "\\" before meta characters such as "\(" and by "\)" so that they become "\\\|" and "\\\("
+	search=${BUFFER//(#m)[\][()\\*?#<>~^]/\\$MATCH} 
+	# find all occurrences of the pattern *${seach}* within the history file 
+	# (k) turns it an array of line numbers. (on) seems to remove duplicates. 
+	# (on) are default options. they can be turned off by (ON). 
+	matches=(${(kon)history[(R)*${search}*]}) 
+	match_counter=0
+	number_of_matches=${#matches}
+fi
+
+# if we search an empty substring fall back to "history-beginning-search-*" 
+if [[ $search4later = "" ]]; then # search string in $BUFFER was empty when we started
+	if [[ $WIDGET = *forward* ]]; then # arrow-down
+		zle .beginning-of-line
+		zle .history-beginning-search-forward
+		zle self-insert 
+		zle backward-delete-char
+		zle .end-of-line
+	else # $WIDGET = *backward* arrow-up
+		zle .beginning-of-line
+		zle .history-beginning-search-backward
+		zle self-insert 
+		zle backward-delete-char
+		zle .end-of-line
+	fi
+else # search string in $BUFFER was NOT empty when we started
+	if [[ $WIDGET = *forward* ]]; then # arrow-down
+		if [[ $match_counter -gt 0 ]]; then
+			let "match_counter = $match_counter - 1"
+		fi
+	else # $WIDGET = *backward* arrow-up
+		if [[ $match_counter -le $number_of_matches ]]; then
+			let "match_counter = $match_counter + 1"
+		fi
+	fi
+	let "match_number = $number_of_matches - $match_counter + 1"
+	let "match_number_times_match_counter = $match_number * $match_counter"
+	if [[ $match_number_times_match_counter -ne 0 ]]; then # if neither $match_number nor $match_counter is 0
+		HISTNO=$matches[$match_number]
+		# among other things the following expression yields a variable $MEND, which
+		# indicates the end position of the first occurrence of $search in $BUFFER
+		: ${(S)BUFFER##(#m)($search##)}
+		let "my_mbegin = $MEND - $#search"
+		region_highlight=("$my_mbegin $MEND $my_highlight") 
+	else # $match_number is 0 or $match_counter is 0. so we are past either the beginning or the end of $matches 
+		if [[ $match_number -eq 0 ]]; then # past either the beginning of $matches 
+			if [[ $WIDGET = *backward* ]]; then # arrow-down
+				BUFFER=$search4later
+				region_highlight=("0 $MEND $my_highlight") 
+				let "match_counter = $match_counter - 1 "
+			fi 
+		else # past either the end of $matches 
+			BUFFER=$search4later
+			region_highlight=("0 $MEND $my_highlight") 
+			if [[ $WIDGET = *forward* ]]; then # arrow-down
+				BUFFER=$search4later
+				region_highlight=("0 $MEND $my_highlight") 
+				let "match_counter = $match_counter + 1 "
+			fi 
+		fi 
+	fi 
+	zle .end-of-line
+	##for debugging purposes: 
+	#zle -R "mn: "$match_number" mc: "$match_counter" m#: "${#matches}
+    #read -k -t 2 && zle -U $REPLY
+fi 
+
+
+
+

@@ -1,0 +1,53 @@
+#!/usr/bin/env zsh 
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
+# /usr/bin/fizsh 
+
+# Written by Guido van Steen 
+
+if [[ ( $1 == "--version" ) || ( $1 == "-v" ) ]]; then 
+  VERSION="0.0.1-1"
+  echo $VERSION
+else 
+  if [[ ! $1 == "" ]]; then 
+    zsh "$@"
+  else 
+    export OLD_ZDOTDIR=$ZDOTDIR
+    VERSION="0.0.1-1"
+    F_DOT_DIR=~/.fizsh 
+    F_ETC_DIR=/etc/fizsh 
+    F_SYNTAX=zsh-syntax-highlighting 
+    F_SEARCH=fizsh-history-search-backward 
+    if [[ ! -d $F_DOT_DIR ]]; then
+      mkdir $F_DOT_DIR 
+    fi 
+    if [[ ( ! -f $F_DOT_DIR/$F_SYNTAX ) ]]; then
+      cp $F_ETC_DIR/$F_SYNTAX $F_DOT_DIR/$F_SYNTAX 
+    else 
+      if [[ ( ! (${$( md5sum  $F_ETC_DIR/$F_SYNTAX )[1]} == ${$( md5sum  $F_DOT_DIR/$F_SYNTAX )[1]} ) ) ]]; then 
+        cp $F_ETC_DIR/$F_SYNTAX $F_DOT_DIR/$F_SYNTAX 
+      fi  
+    fi 
+    if [[ ( ! -f $F_DOT_DIR/$F_SEARCH ) ]]; then
+      cp $F_ETC_DIR/$F_SEARCH $F_DOT_DIR/$F_SEARCH 
+    else 
+      if [[ ( ! (${$( md5sum  $F_ETC_DIR/$F_SEARCH )[1]} == ${$( md5sum  $F_DOT_DIR/$F_SEARCH )[1]} ) ) ]]; then 
+        cp $F_ETC_DIR/$F_SEARCH $F_DOT_DIR/$F_SEARCH 
+      fi
+    fi  
+    if [[ ( ! -f $F_DOT_DIR/.zshrc ) ]]; then
+      cp $F_ETC_DIR/fizshrc $F_DOT_DIR/.zshrc 
+    else 
+      if [[ ( ! (${$( md5sum  $F_ETC_DIR/fizshrc )[1]} == ${$( md5sum  $F_DOT_DIR/.zshrc )[1]} ) ) ]]; then 
+        cp $F_ETC_DIR/fizshrc $F_DOT_DIR/.zshrc 
+      fi  
+    fi 
+    if [[ ( ! -f $F_DOT_DIR/.fizshrc ) ]]; then
+      touch $F_DOT_DIR/.fizshrc 
+      chmod +x $F_DOT_DIR/.fizshrc
+    fi 
+    export ZDOTDIR=$F_DOT_DIR
+    zsh -k
+  fi
+fi 
