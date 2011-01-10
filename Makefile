@@ -2,21 +2,7 @@
 
 .PHONY: default 
 default: 
-	@echo "#!/usr/bin/env sh " > ./test.sh
-	@echo "if [ X\`which zsh\` = X ]; then " >> ./test.sh
-	@echo "echo Zsh seems unavailable. Install it prior to installing fizsh. " >> ./test.sh
-	@echo "fi" >> ./test.sh
-	@echo "if [ X\`which md5sum\` = X ]; then " >> ./test.sh
-	@echo "echo Coreutils seems unavailable. Install it prior to installing fizsh. " >> ./test.sh
-	@echo "fi" >> ./test.sh
-	@echo "if [ ! X\`which zsh\` = X ]; then " >> ./test.sh
-	@echo "if [ ! X\`which md5sum\` = X ]; then " >> ./test.sh
-	@echo "echo All fizsh\'s requirements seem to be satisfied. " >> ./test.sh
-	@echo "fi" >> ./test.sh
-	@echo "fi" >> ./test.sh
-	@chmod +x ./test.sh
-	@./test.sh
-	@rm -rf ./test.sh
+	@./test_requirements.sh
 
 .PHONY: install
 install: 

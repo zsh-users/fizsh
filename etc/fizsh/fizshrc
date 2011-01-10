@@ -6,8 +6,8 @@
 
 # This fizshrc script intends to make zsh behave similar to fish when it comes to fish's 
 # syntax highlighting and fish's matlab-like history search. The script uses work by 
-# Peter Stephenson and Julien Nicoulaud (see the files "fizsh-history-search-backward" 
-# and "zsh-syntax-highlighting"). 
+# Peter Stephenson and the "zsh-syntax-highlighting contributors" (see "man fizsh" and 
+# the files "fizsh-history-search-backward" and "zsh-syntax-highlighting"). 
 
 # The script was tested on Linux. It may need some modifications to work on 
 # other systems. 
