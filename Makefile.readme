@@ -1,22 +1,22 @@
 To check if fizsh\'s installation requirements are satisfied run: 
 
-user@localmachine$ tar -xvzf fizsh-0.0.1-1.tar.gz 
-user@localmachine$ cd fizsh-0.0.1-1 
+user@localmachine$ tar -xvzf fizsh-1.0.0.tar.gz 
+user@localmachine$ cd fizsh-1.0.0 
 user@localmachine$ make 
 
 To install fizsh run: 
 
-user@localmachine$ tar -xvzf fizsh-0.0.1-1.tar.gz 
-user@localmachine$ cd fizsh-0.0.1-1 
+user@localmachine$ tar -xvzf fizsh-1.0.0.tar.gz 
+user@localmachine$ cd fizsh-1.0.0 
 user@localmachine$ sudo make install 
 
 To uninstall run: 
 
-user@localmachine$ tar -xvzf fizsh-0.0.1-1.tar.gz 
-user@localmachine$ cd fizsh-0.0.1-1 
+user@localmachine$ tar -xvzf fizsh-1.0.0.tar.gz 
+user@localmachine$ cd fizsh-1.0.0 
 user@localmachine$ sudo make uninstall 
 user@localmachine$ cd  .. 
-user@localmachine$ rm fizsh-0.0.1-1.tar.gz 
+user@localmachine$ rm fizsh-1.0.0.tar.gz 
 
 Note that "user@localmachine$ " is a prompt. It is thus NOT part of the commands "make install" and "make uninstall". 
 

@@ -9,7 +9,7 @@ install:
 	@cp -rf ./usr /
 	@cp -rf ./etc /
 	@modify_etc_shells --add /usr/bin/fizsh 
-	@echo fizsh version 0.0.1-1 has been installed 
+	@echo fizsh version 1.0.0 has been installed 
 
 .PHONY: uninstall
 uninstall: 
@@ -18,6 +18,6 @@ uninstall:
 	@rm -f /usr/share/man/man1/fizsh.1.gz 
 	@rm -rf /etc/fizsh/
 	@rm -rf /usr/share/doc/fizsh/
-	@echo fizsh version 0.0.1-1 has been uninstalled 
+	@echo fizsh version 1.0.0 has been uninstalled 
 
 

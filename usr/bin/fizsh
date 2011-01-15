@@ -7,7 +7,7 @@
 # Written by Guido van Steen 
 
 if [[ ( $1 == "--version" ) || ( $1 == "-v" ) ]]; then 
-  VERSION="0.0.1-1"
+  VERSION="1.0.0"
   echo $VERSION
 else 
   if [[ ! $1 == "" ]]; then 
@@ -18,7 +18,7 @@ else
     F_DOT_DIR=~/.fizsh 
     F_ETC_DIR=/etc/fizsh 
     F_SYNTAX=zsh-syntax-highlighting 
-    F_SEARCH=fizsh-history-search-backward 
+    F_SEARCH=zsh-history-substring-search-backward 
     if [[ ! -d $F_DOT_DIR ]]; then
       mkdir $F_DOT_DIR 
     fi 

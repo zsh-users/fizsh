@@ -88,9 +88,6 @@ setopt correct
 
 # Rebind keys 
 # 
-bindkey '\e[A' fizsh-history-search-backward 
-bindkey '\e[B' fizsh-history-search-forward 
-
 bindkey '\e[C' forward-char 
 bindkey '\e[D' backward-char 
 bindkey '\e[3~' delete-char 
@@ -105,10 +102,6 @@ bindkey '\e[6~' end-of-history # page down
 
 bindkey '^r' history-incremental-search-backward 
 bindkey '^s' history-incremental-search-forward 
-
-autoload -U fizsh-history-search-backward 
-zle -N fizsh-history-search-forward fizsh-history-search-backward 
-zle -N fizsh-history-search-backward 
 
 # disable ctrl-d to logout 
 # 
@@ -125,13 +118,14 @@ zle -N zlogout
 bindkey '^D' zlogout 
 
 source $FDOTDIR/zsh-syntax-highlighting 
+source $FDOTDIR/zsh-history-substring-search-backward 
 
 source $FDOTDIR/.fizshrc 
 
-if [[ $OLD_ZDOTDIR == "" ]]; then
-  export ZDOTDIR=$HOME
-else
-  export ZDOTDIR=$OLD_ZDOTDIR
-fi
+if [[ $OLD_ZDOTDIR == "" ]]; then 
+  export ZDOTDIR=$HOME 
+else 
+  export ZDOTDIR=$OLD_ZDOTDIR 
+fi 
 
 
