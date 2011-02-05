@@ -1,10 +1,20 @@
 Fizsh uses a script called "zsh-syntax-highlighting". This script is developed and maintained by the "zsh-syntax-highlighting contributors" at "https://github.com/nicoulaj/zsh-syntax-highlighting". 
 
-The version of the script that this version fizsh uses was downloaded on Mon Jan 10 22:50:15 CET 2011. 
+The version of the script that this version fizsh uses was downloaded on Sat, 05 Feb 2011 08:49:21 +0100. 
+
+A small patch, "scripts/zsh-syntax-highlighting.patch", was applied. Without this patch zsh complains about "_zsh_check-path:4: bad option: -t" when a command starts with "-", "\-" or "-\". 
 
 Users may wish to install a more recent version of the script "zsh-syntax-highlighting". This may be done using the following command: 
 
 user@localmachine$ sudo wget --no-check-certificate --output-document=/etc/fizsh/zsh-syntax-highlighting https://github.com/nicoulaj/zsh-syntax-highlighting/raw/master/zsh-syntax-highlighting.zsh 
+
+One may apply the patch: 
+
+user@localmachine$ sudo patch /etc/fizsh/zsh-syntax-highlighting /etc/fizsh/zsh-syntax-highlighting.patch 
+
+To unpatch: 
+
+user@localmachine$ sudo patch -Rp1 /etc/fizsh/zsh-syntax-highlighting /etc/fizsh/zsh-syntax-highlighting.patch 
 
 Note that "user@localmachine$ " is a prompt. It is thus NOT part of the "sudo wget ..." command. 
 
