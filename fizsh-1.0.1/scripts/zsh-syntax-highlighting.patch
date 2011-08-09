@@ -1,9 +1,0 @@
-@@ -82,7 +82,7 @@
-   [[ -z ${(Q)arg} ]] && return 1
-   [[ -e ${(Q)arg} ]] && return 0
-   [[ ! -e ${(Q)arg:h} ]] && return 1
--  [[ ${#BUFFER} == $end_pos && -n $(print ${(Q)arg}*(N)) ]] && return 0
-+  [[ ${BUFFER} != "-" && ${BUFFER} != "\\-" && ${BUFFER} != "-\\" ]] && [[ ${#BUFFER} == $end_pos && -n $(print ${(Q)arg}*(N)) ]] && return 0
-   return 1
- }
- 
