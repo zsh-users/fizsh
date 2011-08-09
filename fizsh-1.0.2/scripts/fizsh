@@ -35,7 +35,6 @@ F_FIZSHRC=fizshrc.zsh
 F_PROMPT=fizsh-prompt.zsh
 F_SEARCH=zsh-history-substring-search.zsh
 F_SYNTAX=zsh-syntax-highlighting.zsh
-F_HIGHLIGHTERS_TGZ=highlighters.tar.gz
 F_HIGHLIGHTERS_DIR=highlighters
  
 # Fizsh can be called with four optons: "-l"/"--login", "-h"/"--help" "-v"/"--version" "-r/--reinstall"
@@ -66,11 +65,17 @@ else
 				cp $F_ETC_DIR/$F_SEARCH $F_DOT_DIR/$F_SEARCH
 				cp $F_ETC_DIR/$F_SYNTAX $F_DOT_DIR/$F_SYNTAX
 				rm -rf $F_DOT_DIR/$F_HIGHLIGHTERS_DIR
-				F_TEMP_PWD=$PWD
-				cd $F_DOT_DIR
-				tar -xvf $F_ETC_DIR/$F_HIGHLIGHTERS_TGZ > /dev/zero
-				cd $F_TEMP_PWD
-				cp $F_ETC_DIR/$F_FIZSHRC  $F_DOT_DIR/.zshrc
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/brackets
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/cursor
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/main
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/pattern
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/root				
+				cp $F_ETC_DIR/brackets-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
+				cp $F_ETC_DIR/cursor-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh 
+				cp $F_ETC_DIR/main-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
+				cp $F_ETC_DIR/pattern-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
+				cp $F_ETC_DIR/root-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
+				cp $F_ETC_DIR/$F_FIZSHRC  $F_DOT_DIR/.zshrc 
 			fi 
 			if [[ ( ! -f $F_DOT_DIR/$F_PROMPT ) ]]; then
 				cp $F_ETC_DIR/$F_PROMPT $F_DOT_DIR/$F_PROMPT
@@ -82,10 +87,16 @@ else
 				cp $F_ETC_DIR/$F_SYNTAX $F_DOT_DIR/$F_SYNTAX
 			fi
 			if [[ ( ! -d $F_DOT_DIR/$F_HIGHLIGHTERS_DIR ) ]]; then
-				F_TEMP_PWD=$PWD
-				cd $F_DOT_DIR
-				tar -xvf $F_ETC_DIR/$F_HIGHLIGHTERS_TGZ > /dev/zero
-				cd $F_TEMP_PWD
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/brackets
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/cursor
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/main
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/pattern
+				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/root				
+				cp $F_ETC_DIR/brackets-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/brackets-highlighter.zsh
+				cp $F_ETC_DIR/cursor-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/cursor-highlighter.zsh 
+				cp $F_ETC_DIR/main-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/main-highlighter.zsh
+				cp $F_ETC_DIR/pattern-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/pattern-highlighter.zsh
+				cp $F_ETC_DIR/root-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/root-highlighter.zsh
 			fi 
 			if [[ ( ! -f $F_DOT_DIR/.zshrc ) ]]; then
 				cp $F_ETC_DIR/$F_FIZSHRC  $F_DOT_DIR/.zshrc
@@ -112,10 +123,8 @@ fi
 unset F_DOT_DIR
 unset F_ETC_DIR
 unset F_HIGHLIGHTERS_DIR
-unset F_HIGHLIGHTERS_TGZ
 unset F_PROMPT
 unset F_SEARCH
 unset F_SYNTAX
 unset F_VERSION
-unset F_TEMP_PWD
 

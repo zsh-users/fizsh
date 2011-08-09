@@ -141,7 +141,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 bin_SCRIPTS = fizsh
 scriptdir = /etc/fizsh
-script_SCRIPTS = fizshrc.zsh zsh-history-substring-search.zsh zsh-syntax-highlighting.zsh fizsh-prompt.zsh modify-etc-shells.zsh highlighters.tar.gz
+script_SCRIPTS = fizshrc.zsh zsh-history-substring-search.zsh zsh-syntax-highlighting.zsh fizsh-prompt.zsh modify-etc-shells.zsh brackets-highlighter.zsh cursor-highlighter.zsh main-highlighter.zsh pattern-highlighter.zsh root-highlighter.zsh
 all: all-am
 
 .SUFFIXES:
