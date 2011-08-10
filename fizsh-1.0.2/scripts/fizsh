@@ -92,11 +92,11 @@ else
 				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/main
 				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/pattern
 				mkdir -p $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/root				
-				cp $F_ETC_DIR/brackets-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/brackets-highlighter.zsh
-				cp $F_ETC_DIR/cursor-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/cursor-highlighter.zsh 
-				cp $F_ETC_DIR/main-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/main-highlighter.zsh
-				cp $F_ETC_DIR/pattern-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/pattern-highlighter.zsh
-				cp $F_ETC_DIR/root-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/root-highlighter.zsh
+				cp $F_ETC_DIR/brackets-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
+				cp $F_ETC_DIR/cursor-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh 
+				cp $F_ETC_DIR/main-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
+				cp $F_ETC_DIR/pattern-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
+				cp $F_ETC_DIR/root-highlighter.zsh $F_DOT_DIR/$F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
 			fi 
 			if [[ ( ! -f $F_DOT_DIR/.zshrc ) ]]; then
 				cp $F_ETC_DIR/$F_FIZSHRC  $F_DOT_DIR/.zshrc
