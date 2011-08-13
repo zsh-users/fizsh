@@ -33,6 +33,10 @@ Making all in src
 
 user@localmachine$ sudo make install
 
+(Reading database ... 399874 files and directories currently installed.)
+
+...
+
 Making install in src
 
 ...
