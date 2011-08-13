@@ -9,7 +9,7 @@ install
 
 In order to install FIZSH, you may run the following: 
 
-user@localmachine$ mkdir ./fizsh # or 
+user@localmachine$ mkdir ./fizsh 
 
 user@localmachine$ git clone git@github.com:zsh-users/fizsh
 
@@ -60,7 +60,7 @@ Selecting previously deselected package fizsh.
 
 ...
 
-user@localmachine$ fizsh # or fizsh -r if you installed fizsh previously and you want to update its configuration file
+user@localmachine$ fizsh # or "fizsh -r" if you installed fizsh previously and you want to update its configuration file
 
 Welcome to fizsh, the friendly interactive zshell
 
@@ -80,10 +80,11 @@ Making uninstall in src
 
 ...
 
+
 Those who have installed a ".deb" file may run:
 
 user@localmachine ~/p/t/current_dir> sudo apt-get remove fizsh
 
-Reading database ... 399874 files and directories currently installed.)
+(Reading database ... 399874 files and directories currently installed.)
 
 ...
