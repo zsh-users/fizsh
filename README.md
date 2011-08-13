@@ -50,7 +50,7 @@ Type man fizsh for instructions on how to use fizsh
 user@localmachine /p/t/f/fizsh-1.0.2> 
 
 
-Users on Debian based systems can install the latest binary package from http://sourceforge.net/projects/fizsh/files/: 
+Users on Debian based systems can install the latest binary package from http://sourceforge.net/projects/fizsh : 
 
 user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.2-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.2-1_all.deb?r=&ts=1294513167&use_mirror=garr"
 
@@ -84,3 +84,6 @@ Those who have installed a ".deb" file may run:
 
 user@localmachine ~/p/t/current_dir> sudo apt-get remove fizsh
 
+Reading database ... 399874 files and directories currently installed.)
+
+...
