@@ -1,0 +1,64 @@
+.TH "fizsh" 1 "9 Aug 2011" "Version 1.0.2" "fizsh" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+fizsh - friendly interactive zshell.
+.PP
+.SH SYNOPSIS
+.B fizsh
+[\fIOPTIONS\fR]... [\fIARGUMENTS\fR]...
+.SH DESCRIPTION
+.PP
+Fizsh is a front end to zsh. Fizsh provides zsh with interactive
+syntax-highlighting and a MATLAB-like history-search. Fizsh is
+intended to look and feel similar to fish. A distinguishing feature
+is that fizsh can handle Bourne compatible syntax. This is because
+fizsh is a front end to zsh. Fish uses its own syntax.
+.SH CONFIGURATION
+.PP
+\fB$HOME/\&.fizsh\fP\& is the directory where fizsh keeps its configuration
+files. The file \fB$HOME/\&.fizsh/\&.fizshrc\fP\& serves as the user's
+local startup script. Local customizations, such as aliases and functions,
+can be added here. \fB$HOME/\&.fizsh/\&.fizshrc\fP\& allows the same syntax
+as \fB$HOME/\&.zshrc\fP\& under zsh. \fB$HOME/\&.fizsh/\&.fizsh_history\fP\&
+is default name of fizsh's history file.
+.PP
+The other files in \fB$HOME/\&.fizsh\fP\& are installed by
+\fB/usr/\&bin/\&fizsh\fP\. In order to reinstall these files use:
+\fB/usr/\&bin/\&fizsh \&-r\fP\ or \fB/usr/\&bin/\&fizsh \&--reinstall\fP\.
+.PP
+Compared to the default configuration of zsh, fizsh additionally sets the
+options "histignorealldups", "histignorespace", "histreduceblanks",
+"incappendhistory", "interactivecomments", "promptsubst", "correct" and
+"nobeep".
+.PP
+For further configuration details consult zsh's \fIman\fR pages.
+.SH INVOCATION
+.PP
+Fizsh is meant to be invoked without options and without
+command-line arguments. 
+.PP
+The only supported command-line options are "--version", "--help", "--login"
+"--reinstall", "-v", "-h", "-l" and "-r". "--version" or "-v" yields fizsh's
+version number. "--help" or "-h" causes fizsh to print brief usage information.
+"--login" or "-l" cause fizsh to be a login shell. "--reinstall" or "-r" will
+reinstall some of fizsh's configuration files (see above).
+.PP
+If invoked with other command-line options and/or arguments fizsh will 
+silently revert to zsh.
+.SH BUGS
+.PP
+There are no known bugs at the moment. Bug reports, bug fixes and other
+comments are welcome.
+.SH NOTES
+.PP
+MATLAB is a registered trademark of The MathWorks, Inc.
+.SH AUTHOR
+.PP
+Written by Guido van Steen, based on work by the
+"zsh-syntax-highlighting contributors" and the contributors to
+"zsh-history-substring-search".
+.SH "SEE ALSO"
+\fIzsh\fP(1)
+\fIfish\fP(1)
+
