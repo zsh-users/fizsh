@@ -48,6 +48,17 @@ Users on Debian based systems can install the latest binary package from [Source
     Type man fizsh for instructions on how to use fizsh
     user@localmachine ~/p/t/current_dir> 
 
+    People who use "Debian unstable (AKA sid)" may add a line like "deb http://ftp.de.debian.org/debian sid main" to their "/etc/apt/sources.list": 
+    user@localmachine$ sudo apt-get install fizsh
+    Reading package lists... Done
+    Building dependency tree
+    Reading state information... Done
+    The following NEW packages will be installed:
+        fizsh
+    0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+    Need to get 17.4kB of archives.
+    ...
+
 
 uninstall
 =========
@@ -67,3 +78,4 @@ Those who have installed a ".deb" file may run:
 
 
 [1]: http://sourceforge.net/projects/fizsh
+
