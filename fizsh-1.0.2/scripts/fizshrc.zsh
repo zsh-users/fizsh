@@ -104,7 +104,8 @@ title
 
 # Initiate completion system
 #
-autoload -U compinit compinit
+autoload -U compinit 
+compinit
 zmodload zsh/complist
 
 # Enable color support of ls
