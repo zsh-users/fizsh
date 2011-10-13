@@ -6,13 +6,13 @@
 # Redistribution and use in source and binary forms, with or without modification, are permitted
 # provided that the following conditions are met:
 #
-#	* Redistributions of source code must retain the above copyright notice, this list of conditions
-#		and the following disclaimer.
-#	* Redistributions in binary form must reproduce the above copyright notice, this list of
-#		conditions and the following disclaimer in the documentation and/or other materials provided
-#		with the distribution.
-#	* Neither the name of the FIZSH nor the names of its contributors may be used to endorse or
-#		promote products derived from this software without specific prior written permission.
+#  * Redistributions of source code must retain the above copyright notice, this list of conditions
+#    and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright notice, this list of
+#    conditions and the following disclaimer in the documentation and/or other materials provided
+#    with the distribution.
+#  * Neither the name of the FIZSH nor the names of its contributors may be used to endorse or
+#    promote products derived from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
 # IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
@@ -30,41 +30,35 @@
 
 # This fizshrc script intends to make zsh behave similar to fish when it comes to fish's
 # syntax highlighting and fish's matlab-like history search. This script also emulates
-# fish's prompt. It "abreviates" all directories in the path, except the current one.
+# fish's prompt.
 #
-# The script is partially based on work by Peter Stephenson. It also makes use of the
-# script by the "zsh-syntax-highlighting contributors". To echo the prompt it calls
-# "fizsh-prompt". (see "man fizsh" and the files "fizsh-history-search-backward",
-# "zsh-syntax-highlighting" and "fizsh-prompt".
-
+# When fizsh is run for the first time this script is copied to "$HOME/.fizsh/.zshrc".
+# "$HOME/.fizsh/" is fizsh's "$ZDOTDIR" directory. This file is therefore sourced automatically
+# when fizsh is run.
+#
 # The script was tested on Linux. It may need some modifications to work on
 # other systems.
 
-# Initializations
+# Set the environment variables
 #
 0=fizsh # Trick to let people check wether fizsh is running, i.e. whether $0 is "fizsh"
 SHELL=$(which fizsh)
 
-# (f)path
-#
-PATH=$PATH:~/bin/:$F_DOT_DIR/ # F_DOT_DIR is exported to fizsh by /usr/bin/fizsh
-fpath=($fpath ~ $F_DOT_DIR/)
-
 # History
 #
-HISTFILE=$F_DOT_DIR/.fizsh_history
-HISTSIZE=50000
-SAVEHIST=50000
+HISTFILE=$_fizsh_F_DOT_DIR/.fizsh_history
+HISTSIZE=100000
+SAVEHIST=100000
 
 # Append to the history file instead of overwriting it and do it immediately
 # when a command is executed.
 #
-setopt appendhistory
-setopt incappendhistory
+setopt append_history
+setopt inc_append_history
 
 # Avoid duplicate entries in the history file
 #
-setopt histignorealldups
+setopt hist_ignore_all_dups
 
 # Reduce whitespace in history
 #
@@ -74,46 +68,54 @@ setopt hist_reduce_blanks
 #
 setopt hist_ignore_space
 
+# Allow interactive comments
+#
+setopt interactive_comments
+
 # When entering a nonexistent command name automatically try to find a similar one.
 #
 setopt correct
 
 # Get rid of beeps
 #
-setopt nobeep
+setopt no_beep
 
 # Set the prompt
 #
-setopt promptsubst
+setopt prompt_subst
+
 # PS1='$(fizsh-prompt)'
 # for some reason turning this into a sourcable function does not work
 # see below as well
-if [[ -r "$F_DOT_DIR""/fizsh-prompt.zsh" ]]; then
-	PS1='$("$F_DOT_DIR"/fizsh-prompt.zsh)'
+#
+if [[ -r "$_fizsh_F_DOT_DIR""/fizsh-prompt.zsh" ]]; then
+  PS1='$("$_fizsh_F_DOT_DIR"/fizsh-prompt.zsh)'
 else
-	PS1=''
+  PS1=''
 fi
 
-# Title
+# Set the terminal title
 #
-function title() {
-	[[ "xterm" =~ $TERM ]] && print -Pn "\e]0;fizsh: %n @ %M: %~\a"
-	[[ "screen" =~ $TERM ]] && print -Pn "\e]0;fizsh: %n @ %M [screened]: %~\a"
-}
-title
+[[ "xterm" =~ $TERM ]] && precmd () {print -Pn "\e]0;$0: %n @ %M: %~\a"}
+[[ "screen" =~ $TERM ]] && precmd () {print -Pn "\e]0;$0: %n @ %M [screened]: %~\a"}
 
 # Initiate completion system
 #
-autoload -U compinit 
-compinit
+autoload -U compinit
+if [[ $_fizsh_F_COMPINIT_STARTED -ne 1 ]]; then
+  compinit
+  _fizsh_F_COMPINIT_STARTED=1
+fi
+
 zmodload zsh/complist
 
 # Enable color support of ls
+#
 if [[ "$TERM" != "dumb" ]]; then
-	if [[ -x `which dircolors` ]]; then
-		eval `dircolors -b`
-		alias 'ls=ls --color=auto'
-	fi
+  if [[ -x $(which dircolors) ]]; then
+    eval $(dircolors -b)
+    alias 'ls=ls --color=auto'
+  fi
 fi
 
 # Use colored output
@@ -121,42 +123,25 @@ fi
 autoload -U colors && colors
 alias grep="grep --color=auto"
 
-# Rebind keys
+# Source zsh-syntax-highlighting.zsh, zsh-history-substring-search.zsh,
+# fizsh-miscellaneous.zsh and fizshrc
 #
-bindkey '\e[C' forward-char
-bindkey '\e[D' backward-char
-bindkey '\e[3~' delete-char
-bindkey '^?' backward-delete-char
-bindkey '^[OH' beginning-of-line
-bindkey '^[OF' end-of-line
-bindkey '\e[1;5C' forward-word
-bindkey '\e[1;5D' backward-word
+source $_fizsh_F_DOT_DIR/zsh-syntax-highlighting.zsh
+source $_fizsh_F_DOT_DIR/zsh-history-substring-search.zsh
+source $_fizsh_F_DOT_DIR/fizsh-miscellaneous.zsh
 
-bindkey '\e[5~' beginning-of-history
-bindkey '\e[6~' end-of-history
-
-bindkey '^r' history-incremental-search-backward
-bindkey '^s' history-incremental-search-forward
-
-# Source zsh-syntax-highlighting.zsh,
-# zsh-history-substring-search.zsh, and
-# fizshrc
-#
-source $F_DOT_DIR/zsh-syntax-highlighting.zsh
-source $F_DOT_DIR/zsh-history-substring-search.zsh
-# source $F_DOT_DIR/fizsh-prompt # would be nice as well. However,
+# source $_fizsh_F_DOT_DIR/fizsh-prompt # would be nice as well. However,
 # for some reason sourcing the prompt as a function from a file
 # does not work properly: after a while the prompt get out of sync
 # the same thing seems to happen when we use the precmd function
 # to echo the prompt. A bug in ZSH!?
-source $F_DOT_DIR/.fizshrc
+#
+source $_fizsh_F_DOT_DIR/.fizshrc
 
 # Give $ZDOTDIR its original value again so that we can call zsh
 # without implicitly calling fizsh.
 #
-[[ $+OLD_ZDOTDIR == 1 ]] && export ZDOTDIR=$OLD_ZDOTDIR
-# if OLD_ZDOTDIR was exported, we use it to restore the value of ZDOTDIR
-[[ $+OLD_ZDOTDIR == 0 ]] && unset ZDOTDIR
-# if OLD_ZDOTDIR was not exported, ZDOTDIR did not exist before fizsh was called. So we unset it
-unset OLD_ZDOTDIR
-# garbage-collect OLD_ZDOTDIR
+[[ $+_fizsh_F_OLD_ZDOTDIR -eq 1 ]] && export ZDOTDIR=$_fizsh_F_OLD_ZDOTDIR
+# if _fizsh_F_OLD_ZDOTDIR was exported, we use it to restore the value of ZDOTDIR
+[[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR
+# if _fizsh_F_OLD_ZDOTDIR was not exported, ZDOTDIR did not exist before fizsh was called. So we unset it
