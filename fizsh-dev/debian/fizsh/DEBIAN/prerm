@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+
+# 
+
+set -e
+
+/etc/fizsh/modify-etc-shells.sh --remove /usr/bin/fizsh
+/etc/fizsh/modify-version-number.sh --remove /etc/fizsh/.fizsh-version
+
+exit 0

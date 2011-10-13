@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+#DEBHELPER#
+# 
+
+set -e
+
+/etc/fizsh/modify-etc-shells.sh --add /usr/bin/fizsh
+/etc/fizsh/modify-version-number.sh --add /etc/fizsh/.fizsh-version
+
+exit 0
