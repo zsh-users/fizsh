@@ -1,6 +1,6 @@
-#!/usr/bin/env zsh 
+#!/usr/bin/env zsh
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2011 Guido van Steen 
+# Copyright (c) 2011 Guido van Steen
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -23,54 +23,53 @@
 # IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
 # OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # -------------------------------------------------------------------------------------------------
-# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*- 
-# vim: ft=zsh sw=2 ts=2 et 
-# 
-# /etc/fizsh/fizsh-prompt 
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
+# /etc/fizsh/fizsh-prompt
 
-# This file is not sourced (yet). So any garbage is automatically lost after this script completes. 
+# This file is not sourced (yet). So any garbage is automatically lost after this script completes.
 
-RED="%{"$'\033[03;31m'"%}" 
-GREEN="%{"$'\033[03;32m'"%}" 
-BLACK="%{"$'\033[00m'"%}" 
-[[ $UID -ne 0 ]] && promptcolor=$GREEN && user_token="> " 
-[[ $UID -eq 0 ]] && promptcolor=$RED && user_token="# " 
+RED="%{"$'\033[03;31m'"%}"
+GREEN="%{"$'\033[03;32m'"%}"
+BLACK="%{"$'\033[00m'"%}"
+[[ $UID -ne 0 ]] && _fizsh_promptcolor=$GREEN && _fizsh_user_token="> "
+[[ $UID -eq 0 ]] && _fizsh_promptcolor=$RED && _fizsh_user_token="# "
 
-#fizsh-prompt() { # turning this file into function does not work for some reason 
+#fizsh-prompt() { # turning this file into function does not work for some reason
 
-	#title "fizsh" "%m:%55<...<%~" 
-	setopt shwordsplit 
-	dyn_pwd="" 
-	full_path="$(pwd)" 
-	tilda_path=${full_path/$HOME/\~} 
-	# write the home directory as a tilda 
-  [[ $tilda_path[2,-1] == "/" ]] && tilda_path=$tilda_path[2,-1] 
-  # otherwise the first element of split_path would be empty. 
-	forwards_in_tilda_path=${tilda_path//[^["\/"]/} 
-	# remove everything that is not a "/". 
-	number_of_elements_in_tilda_path=$(( $#forwards_in_tilda_path + 1 )) 
-	# we removed the first forward slash, so we need one more element than the number of slashes. 
-	saveIFS="$IFS" 
-	IFS="/" 
-	split_path=(${tilda_path}) 
-	start_of_loop=1 
-	end_of_loop=$number_of_elements_in_tilda_path 
-	for i in {$start_of_loop..$end_of_loop} 
-		do 
-		if [[ $i == $end_of_loop ]]; then 
-			to_be_added=$split_path[i]'/' 
-			dyn_pwd=$dyn_pwd$to_be_added 
-		else 
-			to_be_added=$split_path[i] 
-			to_be_added=$to_be_added[1,1]'/' 
-			dyn_pwd=$dyn_pwd$to_be_added 
-		fi 
-	done 
-	unsetopt shwordsplit 
-	IFS=$saveIFS 
-	[[ ${full_path/$HOME/\~} != $full_path ]] && dyn_pwd=${dyn_pwd/\/~/~} 
-  # remove the slash in front of $HOME 
-	prompt="%n@%m%F${promptcolor} $dyn_pwd[0,-2]${BLACK}$user_token%b%k%f" 
-	echo $prompt 
-#} 
-
+  #title "fizsh" "%m:%55<...<%~"
+  setopt sh_word_split
+  _fizsh_dyn_pwd=""
+  _fizsh_full_path="$(pwd)"
+  _fizsh_tilda_path=${_fizsh_full_path/$HOME/\~}
+  # write the home directory as a tilda
+  [[ $_fizsh_tilda_path[2,-1] == "/" ]] && _fizsh_tilda_path=$_fizsh_tilda_path[2,-1]
+  # otherwise the first element of split_path would be empty.
+  _fizsh_forwards_in_tilda_path=${_fizsh_tilda_path//[^["\/"]/}
+  # remove everything that is not a "/".
+  _fizsh_number_of_elements_in_tilda_path=$(( $#_fizsh_forwards_in_tilda_path + 1 ))
+  # we removed the first forward slash, so we need one more element than the number of slashes.
+  _fizsh_saveIFS="$IFS"
+  IFS="/"
+  _fizsh_split_path=(${_fizsh_tilda_path})
+  _fizsh_start_of_loop=1
+  _fizsh_end_of_loop=$_fizsh_number_of_elements_in_tilda_path
+  for i in {$_fizsh_start_of_loop..$_fizsh_end_of_loop}
+    do
+    if [[ $i == $_fizsh_end_of_loop ]]; then
+      _fizsh_to_be_added=$_fizsh_split_path[i]'/'
+      _fizsh_dyn_pwd=$_fizsh_dyn_pwd$_fizsh_to_be_added
+    else
+      _fizsh_to_be_added=$_fizsh_split_path[i]
+      _fizsh_to_be_added=$_fizsh_to_be_added[1,1]'/'
+      _fizsh_dyn_pwd=$_fizsh_dyn_pwd$_fizsh_to_be_added
+    fi
+  done
+  unsetopt sh_word_split
+  IFS=$_fizsh_saveIFS
+  [[ ${_fizsh_full_path/$HOME/\~} != $_fizsh_full_path ]] && _fizsh_dyn_pwd=${_fizsh_dyn_pwd/\/~/~}
+  # remove the slash in front of $HOME
+  _fizsh_prompt="%n@%m%F${_fizsh_promptcolor} $_fizsh_dyn_pwd[0,-2]${BLACK}$_fizsh_user_token%b%k%f"
+  echo $_fizsh_prompt
+#}
