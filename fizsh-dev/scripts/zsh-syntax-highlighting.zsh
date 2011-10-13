@@ -49,7 +49,7 @@ _zsh_highlight()
 
   # Do not highlight if there are more than 300 chars in the buffer. It's most
   # likely a pasted command or a huge list of files in that case..
-  [[ -n $ZSH_HIGHLIGHT_MAXLENGTH ]] && [[ $#BUFFER -gt $ZSH_HIGHLIGHT_MAXLENGTH ]] && return $ret
+  [[ -n ${ZSH_HIGHLIGHT_MAXLENGTH:-} ]] && [[ $#BUFFER -gt $ZSH_HIGHLIGHT_MAXLENGTH ]] && return $ret
 
   # Do not highlight if there are pending inputs (copy/paste).
   [[ $PENDING -gt 0 ]] && return $ret
@@ -69,7 +69,8 @@ _zsh_highlight()
 
         # Remove what was stored in its cache from region_highlight.
         cache_place="_zsh_highlight_${highlighter}_highlighter_cache"
-        [[ ${#${(P)cache_place}} -gt 0 ]] && region_highlight=(${region_highlight:#(${(P~j.|.)cache_place})})
+        typeset -ga ${cache_place}
+        [[ ${#${(P)cache_place}} -gt 0 ]] && [[ ! -z ${region_highlight-} ]] && region_highlight=(${region_highlight:#(${(P~j.|.)cache_place})})
 
       fi
     done
@@ -82,7 +83,7 @@ _zsh_highlight()
       {
         "_zsh_highlight_${highlighter}_highlighter"
       } always  {
-        : ${(PA)cache_place::=${region_highlight:#(${(~j.|.)region_highlight_copy})}}
+        [[ ! -z ${region_highlight-} ]] && : ${(PA)cache_place::=${region_highlight:#(${(~j.|.)region_highlight_copy})}}
       }
     done
 
@@ -114,7 +115,7 @@ _zsh_highlight_buffer_modified()
 # Returns 0 if the cursor has moved since _zsh_highlight was last called.
 _zsh_highlight_cursor_moved()
 {
-  [[ -n $CURSOR ]] && [[ -n $_ZSH_HIGHLIGHT_PRIOR_CURSOR ]] && (($_ZSH_HIGHLIGHT_PRIOR_CURSOR != $CURSOR))
+  [[ -n $CURSOR ]] && [[ -n ${_ZSH_HIGHLIGHT_PRIOR_CURSOR-} ]] && (($_ZSH_HIGHLIGHT_PRIOR_CURSOR != $CURSOR))
 }
 
 
@@ -141,16 +142,16 @@ _zsh_highlight_bind_widgets()
 
       # User defined widget: override and rebind old one with prefix "orig-".
       user:*) eval "zle -N orig-$cur_widget ${widgets[$cur_widget]#*:}; \
-                    _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget && _zsh_highlight }; \
+                    _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget \"\$@\" && _zsh_highlight }; \
                     zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
 
       # Completion widget: override and rebind old one with prefix "orig-".
       completion:*) eval "zle -C orig-$cur_widget ${${widgets[$cur_widget]#*:}/:/ }; \
-                          _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget && _zsh_highlight }; \
+                          _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget \"\$@\" && _zsh_highlight }; \
                           zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
 
       # Builtin widget: override and make it call the builtin ".widget".
-      builtin) eval "_zsh_highlight_widget_$cur_widget() { builtin zle .$cur_widget && _zsh_highlight }; \
+      builtin) eval "_zsh_highlight_widget_$cur_widget() { builtin zle .$cur_widget \"\$@\" && _zsh_highlight }; \
                      zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
 
       # Default: unhandled case.
@@ -201,6 +202,17 @@ _zsh_highlight_load_highlighters "${ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR:-${0:h}/highl
   echo 'zsh-syntax-highlighting: failed loading highlighters, exiting.' >&2
   return 1
 }
+
+# Reset scratch variables when commandline is done.
+_zsh_highlight_preexec_hook()
+{
+  _ZSH_HIGHLIGHT_PRIOR_BUFFER=
+  _ZSH_HIGHLIGHT_PRIOR_CURSOR=
+}
+autoload -U add-zsh-hook
+add-zsh-hook preexec _zsh_highlight_preexec_hook 2>/dev/null || {
+    echo 'zsh-syntax-highlighting: failed loading add-zsh-hook.' >&2
+  }
 
 # Initialize the array of active highlighters if needed.
 [[ $#ZSH_HIGHLIGHT_HIGHLIGHTERS -eq 0 ]] && ZSH_HIGHLIGHT_HIGHLIGHTERS=(main) || true
