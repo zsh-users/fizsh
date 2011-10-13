@@ -1,0 +1,5 @@
+The file fizsh.1 has been created from fizsh.pod using pod2man.
+
+* To construct it use the following command:
+
+$ pod2man -c "" -r "fizsh 1.0.3" ./fizsh.pod > ./fizsh.1
