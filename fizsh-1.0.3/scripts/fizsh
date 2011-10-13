@@ -96,7 +96,7 @@ else
   export _fizsh_F_PROMPT=fizsh-prompt.zsh
   export _fizsh_F_FIZSHRC=fizshrc.zsh
   export _fizsh_F_MISC=fizsh-miscellaneous.zsh
-  export _fizsh_F_GOOGLECODE=http://fizsh.googlecode.com/git/dev/fizsh/scripts
+  export _fizsh_F_GOOGLECODE=http://fizsh.googlecode.com/git/fizsh-dev/scripts
   export _fizsh_F_TMP_DIR=/tmp/$_fizsh_F_FIZSH
 
 ################################################
