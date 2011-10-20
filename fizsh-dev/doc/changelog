@@ -1,18 +1,28 @@
+fizsh (1.0.4) UPSTREAM; urgency=low
+
+  * Release: 1.0.4
+
+  * Simplified the way fizsh finds its own central version number. "$_fizsh_F_CENTRAL_VERSION" is now hardcoded as an environment variable in the "fizsh" script under the "./scripts" directory
+
+  * Updated autoconf's "./configure.ac", which had been not been done for version 1.0.3 
+
+ -- Guido van Steen <vansteen@users.sourceforge.net>  Thu, 20 Oct 2011 12:34:21 +0200
+
 fizsh (1.0.3) UPSTREAM; urgency=low
 
   * Release: 1.0.3
 
-  * downloaded a recent version of zsh-history-substring-search from https://github.com/zsh-users (Wed, 12 Oct 2011 06:59:19 +0200)
+  * Downloaded a recent version of zsh-history-substring-search from https://github.com/zsh-users (Wed, 12 Oct 2011 06:59:19 +0200)
 
-  * downloaded a recent version of zsh-syntax-highlighting from https://github.com/zsh-users (Wed, 12 Oct 2011 06:59:38 +0200)
+  * Downloaded a recent version of zsh-syntax-highlighting from https://github.com/zsh-users (Wed, 12 Oct 2011 06:59:38 +0200)
 
-  * removed the startup options -r or --reinstall again. Reinstalling fizsh is now handled by calling a function "fizsh-reinstall" 
+  * Removed the startup options -r or --reinstall again. Reinstalling fizsh is now handled by calling a function "fizsh-reinstall"
 
-  * added a function "fizsh-upgrade", which enables the user to perform upgrades through the internet
+  * Added a function "fizsh-upgrade", which enables the user to perform upgrades through the internet
 
-  * added a script "fizsh-miscellaneous.zsh", which corrects some small bugs in "zsh-history-substring-search". "fizsh-miscellaneous.zsh" also provides the functions "fizsh-upgrade" and "fizsh-reinstall". 
+  * Added a script "fizsh-miscellaneous.zsh", which corrects some small bugs in "zsh-history-substring-search". "fizsh-miscellaneous.zsh" also provides the functions "fizsh-upgrade" and "fizsh-reinstall" 
 
-  * prefixed all shell variables and functions with either "_fizsh" or "fizsh". An underscore indicates that a variale is meant for internal purposes. This conforms to the naming conventions that "oh-my-zsh" uses
+  * Prefixed all shell variables and functions with either "_fizsh" or "fizsh". An underscore indicates that a variale is meant for internal purposes. This conforms to the naming conventions that "oh-my-zsh" uses
 
  -- Guido van Steen <vansteen@users.sourceforge.net>  Wed, 12 Oct 2011 06:56:56 +0200
 
@@ -20,17 +30,17 @@ fizsh (1.0.2) UPSTREAM; urgency=low
 
   * Release: 1.0.2
 
-  * downloaded a recent version of zsh-history-substring-search from https://github.com/zsh-users (Tue, 09 Aug 2011 10:52:28 +0700)
+  * Downloaded a recent version of zsh-history-substring-search from https://github.com/zsh-users (Tue, 09 Aug 2011 10:52:28 +0700)
 
-  * downloaded a recent version of zsh-syntax-highlighting from https://github.com/zsh-users (Tue, 09 Aug 2011 10:53:02 +0700)
+  * Downloaded a recent version of zsh-syntax-highlighting from https://github.com/zsh-users (Tue, 09 Aug 2011 10:53:02 +0700)
 
-  * added the startup options -r or --reinstall. 
+  * Added the startup options -r or --reinstall
 
-  * this version of Fizsh does not use md5sum anymore in order to find out if certain files have to be reinstalled
+  * This version of Fizsh does not use md5sum anymore in order to find out if certain files have to be reinstalled
 
-  * added the extension ".zsh" to the scripts to be installed in /etc/fizsh
+  * Added the extension ".zsh" to the scripts to be installed in /etc/fizsh
 
-  * renamed some shell scripts according to the current naming used at https://github.com/zsh-users
+  * Renamed some shell scripts according to the current naming used at https://github.com/zsh-users
 
  -- Guido van Steen <vansteen@users.sourceforge.net>  Tue, 09 Aug 2011 10:59:05 +0700
 
@@ -38,29 +48,29 @@ fizsh (1.0.1) UPSTREAM; urgency=low
 
   * Release: 1.0.1
 
-  * corrected a bug in /etc/fizsh/fizshrc (exit and logout caused fizsh to hang on Fedora (and perhaps on some other platforms too)
+  * Corrected a bug in /etc/fizsh/fizshrc (exit and logout caused fizsh to hang on Fedora (and perhaps on some other platforms too)
 
-  * corrected a bug in /etc/fizsh/zsh-syntax-highlighting (pressing arrow-down would not highlight anything if the CURSOR was within BUFFER, and no matches were found) 
+  * Corrected a bug in /etc/fizsh/zsh-syntax-highlighting (pressing arrow-down would not highlight anything if the CURSOR was within BUFFER, and no matches were found)
 
-  * corrected a bug in /etc/fizsh/zsh-syntax-highlighting (starting a command with "-", "\-" or "-\" caused zsh to complain: "_zsh_check-path:4: bad option: -t")
+  * Corrected a bug in /etc/fizsh/zsh-syntax-highlighting (starting a command with "-", "\-" or "-\" caused zsh to complain: "_zsh_check-path:4: bad option: -t")
 
-  * corrected a bug in /usr/bin/modify_etc_shells (this script tried to remove "/usr/bin/fizsh" from "/etc/shells" without checking if fizsh had indeed been installed in "/usr/bin/". Now it safely removes "$(which fizsh)" from "/etc/shells")
+  * Corrected a bug in /usr/bin/modify_etc_shells (this script tried to remove "/usr/bin/fizsh" from "/etc/shells" without checking if fizsh had indeed been installed in "/usr/bin/". Now it safely removes "$(which fizsh)" from "/etc/shells")
 
-  * corrected a bug in /usr/bin/fizsh (echoing "reverting to zsh" in "/usr/bin/fizsh" prevented "ssh - and thus scp and sftp - from logging into fizsh)
+  * Corrected a bug in /usr/bin/fizsh (echoing "reverting to zsh" in "/usr/bin/fizsh" prevented "ssh - and thus scp and sftp - from logging into fizsh)
 
   * Adapted the build-system to automake
 
-  * added the startup options -h or --help and -l or --login
+  * Added the startup options -h or --help and -l or --login
 
-  * moved and renamed /usr/bin/modify_etc_shells to /etc/fizsh/modify-etc-shells. modify_etc_shells's manpage has been removed
+  * Moved and renamed /usr/bin/modify_etc_shells to /etc/fizsh/modify-etc-shells. modify_etc_shells's manpage has been removed
 
-  * shortened directory names appearing in the prompt : "/usr/bin" -> /u/bin; "~/Documents/2011" -> ~/D/2011 (this is like in fish's prompt)
+  * Shortened directory names appearing in the prompt : "/usr/bin" -> /u/bin; "~/Documents/2011" -> ~/D/2011 (this is like in fish's prompt)
 
-  * gave root a red prompt
+  * Gave root a red prompt
 
-  * performed some garbage collection in the fizsh scripts
+  * Performed some garbage collection in the fizsh scripts
   
-  * improved the structure of the program
+  * Improved the structure of the program
 
  -- Guido van Steen <vansteen@users.sourceforge.net>  Mon, 31 Jan 2011 20:23:22 +0100
 

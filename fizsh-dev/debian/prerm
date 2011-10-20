@@ -5,7 +5,8 @@
 
 set -e
 
-/etc/fizsh/modify-etc-shells.sh --remove /usr/bin/fizsh
-/etc/fizsh/modify-version-number.sh --remove /etc/fizsh/.fizsh-version
+fizsh=$(which fizsh)
+
+/etc/fizsh/modify-etc-shells.sh --remove $fizsh
 
 exit 0

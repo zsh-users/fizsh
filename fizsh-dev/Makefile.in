@@ -640,11 +640,9 @@ uninstall-am: uninstall-local
 
 install-data-local:
 	$(srcdir)/scripts/modify-etc-shells.sh --add $(bindir)/fizsh || true
-	$(srcdir)/scripts/modify-version-number.sh --add $(sysconfdir)/fizsh/.fizsh-version || true
 
 uninstall-local:
 	$(srcdir)/scripts/modify-etc-shells.sh --remove $(bindir)/fizsh || true
-	$(srcdir)/scripts/modify-version-number.sh --remove $(sysconfdir)/fizsh/.fizsh-version || true
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

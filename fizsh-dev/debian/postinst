@@ -5,7 +5,8 @@
 
 set -e
 
-/etc/fizsh/modify-etc-shells.sh --add /usr/bin/fizsh
-/etc/fizsh/modify-version-number.sh --add /etc/fizsh/.fizsh-version
+fizsh=$(which fizsh)
+
+/etc/fizsh/modify-etc-shells.sh --add $fizsh
 
 exit 0

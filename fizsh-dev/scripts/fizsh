@@ -32,13 +32,9 @@
 
 ################################################
 #
-# fizsh_F_VERSION=1.0.3
+# Set the version number 
 #
-# Do not remove the above line!!! It is used during the installation of fizsh to determine the
-# version number. E.g. if $fizsh_F_VERSION is equal to 1.0.3, 1.0.3 will be echoed into the file
-# $_fizsh_F_ETC_DIR/$_fizsh_F_VERSION_FILE. Note that $fizsh_F_VERSION is not a real environment
-# variable. It just exists as a comment.
-#
+_fizsh_F_CENTRAL_VERSION=1.0.4
 
 ################################################
 #
@@ -51,9 +47,6 @@ export _fizsh_F_ETC_DIR=$(echo $_fizsh_F_BIN_DIR | sed -e "s/bin/etc/i")/$_fizsh
 [[ $_fizsh_F_ETC_DIR == "/usr/etc/$_fizsh_F_FIZSH" ]] && export _fizsh_F_ETC_DIR="/etc/$_fizsh_F_FIZSH" # in practice noone uses "/usr/etc/"
 
 export _fizsh_F_VERSION_FILE=".fizsh-version"
-export _fizsh_F_CENTRAL_VERSION=$(cat $_fizsh_F_ETC_DIR/$_fizsh_F_VERSION_FILE)
-# $_fizsh_F_ETC_DIR/$_fizsh_F_VERSION_FILE is only modified when a newer or older version of fizsh is installed on the central system
-
 if [[ -f $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE ]]; then
 	export _fizsh_F_LOCAL_VERSION=$(cat $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE)
 else
@@ -101,7 +94,7 @@ else
 
 ################################################
 #
-# upgrade depending on the version numbers of "$_fizsh_F_ETC_DIR/$_fizsh_F_VERSION_FILE" and "$_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE"
+# upgrade depending on the version numbers of "$_fizsh_F_UPGRADE_LOCAL"
 #
   if [[ $_fizsh_F_UPGRADE_LOCAL -eq 1 ]]; then
     "rm" -rf $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT
