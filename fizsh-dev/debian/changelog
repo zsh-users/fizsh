@@ -1,9 +1,9 @@
-fizsh (1.0.4-1) unstable; urgency=low
+fizsh (1.0.5-1) unstable; urgency=low
 
   * New upstream version
 
-  * Version 1.0.3 will be skipped. Upstream released version 1.0.4 shortly
-  after it had released version 1.0.3
+  * Version 1.0.3 and 1.0.4 will be skipped. Versions 1.0.5 and 1.0.4 are both
+  bug fix releases on top of version 1.0.3
 
   * Removed the ./debian/patches directory and ./debian/source/options.
   Upstream corrected an issue in the man page, which the patch was addressing
@@ -13,7 +13,7 @@ fizsh (1.0.4-1) unstable; urgency=low
 
   * Corrected dep5 syntax errors in ./debian/copyright
 
- -- Guido van Steen <vansteen@users.sourceforge.net>  Thu, 20 Oct 2011 11:45:25 +0200
+ -- Guido van Steen <vansteen@users.sourceforge.net>  Thu, 23 Oct 2011 13:39:31 +0200
 
 fizsh (1.0.2-1) unstable; urgency=low
 

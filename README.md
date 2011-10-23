@@ -33,22 +33,22 @@ In order to install FIZSH, you may run the following:
     Welcome to fizsh, the friendly interactive zshell
     Type man fizsh for instructions on how to use fizsh
     
-    You are running fizsh version 1.0.3 now.
+    You are running fizsh version 1.0.5 now.
     
     You may type fizsh-upgrade to upgrade to the latest
     version available on the internet.
     
     You may later type fizsh-reinstall to revert to
-    version 1.0.3 again.
+    version 1.0.5 again.
 
     user@localmachine /p/t/f/fizsh-dev> 
 
 
 Users on Debian based systems can install the latest binary package from [Sourceforge][1]: 
 
-    user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.3-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.3-1_all.deb?r=&ts=1294513167&use_mirror=garr"
+    user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.5-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.5-1_all.deb?r=&ts=1294513167&use_mirror=garr"
 
-    user@localmachine$ sudo dpkg -i ./fizsh_1.0.3-1_all.deb
+    user@localmachine$ sudo dpkg -i ./fizsh_1.0.5-1_all.deb
     Selecting previously deselected package fizsh.
     ...
 

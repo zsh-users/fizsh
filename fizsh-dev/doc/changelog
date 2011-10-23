@@ -1,3 +1,11 @@
+fizsh (1.0.5) UPSTREAM; urgency=low
+
+  * Release: 1.0.5
+
+  * Corrected a bug with respect to the versioning system. 
+
+ -- Guido van Steen <vansteen@users.sourceforge.net>  Thu, 23 Oct 2011 13:35:20 +0200
+
 fizsh (1.0.4) UPSTREAM; urgency=low
 
   * Release: 1.0.4
