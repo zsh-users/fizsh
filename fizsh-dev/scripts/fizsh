@@ -34,7 +34,7 @@
 #
 # Set the version number 
 #
-_fizsh_F_CENTRAL_VERSION=1.0.4
+export _fizsh_F_CENTRAL_VERSION=1.0.5
 
 ################################################
 #
