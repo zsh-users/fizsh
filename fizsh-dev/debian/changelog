@@ -1,3 +1,11 @@
+fizsh (1.0.5-2) unstable; urgency=low
+
+  * Increased standards-version to 3.9.5. 
+
+  * Corrected wrong weekday in debian-changelog
+
+ -- Guido van Steen <vansteen@users.sourceforge.net>  Sun, 25 May 2014 07:41:30 +0200
+
 fizsh (1.0.5-1) unstable; urgency=low
 
   * New upstream version
@@ -13,7 +21,7 @@ fizsh (1.0.5-1) unstable; urgency=low
 
   * Corrected dep5 syntax errors in ./debian/copyright
 
- -- Guido van Steen <vansteen@users.sourceforge.net>  Thu, 23 Oct 2011 13:39:31 +0200
+ -- Guido van Steen <vansteen@users.sourceforge.net>  Sun, 23 Oct 2011 13:39:31 +0200
 
 fizsh (1.0.2-1) unstable; urgency=low
 
