@@ -3,7 +3,7 @@ Section: shells
 Priority: optional
 Maintainer: Guido van Steen <vansteen@users.sourceforge.net>
 Build-Depends: debhelper (>= 7), autotools-dev
-Standards-Version: 3.9.2
+Standards-Version: 3.9.5
 Homepage: http://sourceforge.net/projects/fizsh/
 
 Package: fizsh
