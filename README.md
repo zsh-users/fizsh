@@ -17,7 +17,7 @@ In order to install FIZSH, you may run the following:
 
     user@localmachine$ cd ./fizsh/fizsh-dev
 
-    user@localmachine$ ./configure # or ./configure --bindir=/usr/bin/ --mandir=/usr/share/man/ on Debian based systems
+    user@localmachine$ ./configure # or ./configure --bindir=/usr/bin/ --mandir=/usr/share/man/ --sysconfdir=/etc/fizsh on Debian based systems
     checking for a BSD-compatible install... /usr/bin/install -c
     ...
 
@@ -32,33 +32,35 @@ In order to install FIZSH, you may run the following:
     user@localmachine$ fizsh     
     Welcome to fizsh, the friendly interactive zshell
     Type man fizsh for instructions on how to use fizsh
-    
-    You are running fizsh version 1.0.5 now.
-    
-    You may type fizsh-upgrade to upgrade to the latest
-    version available on the internet.
-    
-    You may later type fizsh-reinstall to revert to
-    version 1.0.5 again.
+    user@localmachine /p/t/f/fizsh-dev> 
 
+
+Those without access to a privileged account may install fizsh in their home directory:
+
+    user@localmachine$ export PATH=$PATH:$HOME/bin && ./configure --prefix=$HOME && make && make install
+    ...
+
+    user@localmachine$ fizsh     
+    Welcome to fizsh, the friendly interactive zshell
+    Type man fizsh for instructions on how to use fizsh
     user@localmachine /p/t/f/fizsh-dev> 
 
 
 Users on Debian based systems can install the latest binary package from [Sourceforge][1]: 
 
-    user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.5-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.5-1_all.deb?r=&ts=1294513167&use_mirror=garr"
+    user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.6-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.6-1_all.deb"
 
-    user@localmachine$ sudo dpkg -i ./fizsh_1.0.5-1_all.deb
+    user@localmachine$ sudo dpkg -i ./fizsh_1.0.6-1_all.deb
     Selecting previously deselected package fizsh.
     ...
 
     user@localmachine$ fizsh
     Welcome to fizsh, the friendly interactive zshell
     Type man fizsh for instructions on how to use fizsh
-    user@localmachine ~/p/t/current_dir> 
+    user@localmachine /p/t/current_dir> 
 
 
-Users of "Debian unstable (AKA sid)", and other people who have added a ine like "deb http://ftp.de.debian.org/debian sid main" to their "/etc/apt/sources.list" may simply run: 
+Users of "Debian" and "Ubunu" may simply run: 
 
     user@localmachine$ sudo apt-get install fizsh
     Reading package lists... Done
@@ -68,19 +70,21 @@ Users of "Debian unstable (AKA sid)", and other people who have added a ine like
     ...
 
 
+Debian / Sid tends to contain a more recent version of Fizsh.
+
 uninstall
 =========
 
 In order to uninstall FIZSH, run:
 
-    user@localmachine ~/p/t/f/fizsh-dev> sudo make uninstall
+    user@localmachine /p/t/f/fizsh-dev> sudo make uninstall
     Making uninstall in src
     ...
 
 
 Those who have installed fizsh through a Debian-based package manager, such as dpkg or apt-get, may run:
 
-    user@localmachine ~/p/t/current_dir> sudo apt-get remove fizsh
+    user@localmachine /p/t/current_dir> sudo apt-get remove fizsh
     (Reading database ... 399874 files and directories currently installed.)
     ...
 

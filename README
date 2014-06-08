@@ -1,46 +1,42 @@
-*** For those using a Debian-based distribution, such as Ubuntu, there is a ".deb" archive file available: 
+*** For those using a Debian-based distribution, such as Ubuntu, there is a ".deb" archive file available:
 
-user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.5-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.5-1_all.deb?r=&ts=1294513167&use_mirror=garr" 
+user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.6-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.6-1_all.deb"
 
-The ".deb" archive can be installed by dpkg: 
+The ".deb" archive can be installed by dpkg:
 
-user@localmachine$ sudo dpkg -i fizsh_1.0.5-1_all.deb 
+user@localmachine$ sudo dpkg -i fizsh_1.0.6-1_all.deb
 user@localmachine$ fizsh
 Welcome to fizsh, the friendly interactive zshell
 Type man fizsh for instructions on how to use fizsh
+user@localmachine current-directory>
 
-You are running fizsh version 1.0.5 now.
+*** People on RPM-based systems may try:
 
-You may type fizsh-upgrade to upgrade to the latest
-version available on the internet.
-
-You may later type fizsh-reinstall to revert to
-version 1.0.5 again.
-
-user@localmachine current-directory> 
-
-*** People on RPM-based systems may try: 
-
-user@localmachine$ wget --no-check-certificate --output-document=fizsh-1.0.5-1.noarch.rpm "https://downloads.sourceforge.net/project/fizsh/fizsh-1.0.5-1.noarch.rpm?r=&ts=1294513167&use_mirror=garr" 
-user@localmachine$ sudo rpm -Uhv fizsh-1.0.5-1.noarch.rpm
+user@localmachine$ wget --no-check-certificate --output-document=fizsh-1.0.6-1.noarch.rpm "https://downloads.sourceforge.net/project/fizsh/fizsh-1.0.6-1.noarch.rpm"
+user@localmachine$ sudo rpm -Uhv fizsh-1.0.6-1.noarch.rpm
 user@localmachine$ fizsh
 Welcome to fizsh, the friendly interactive zshell
 Type man fizsh for instructions on how to use fizsh
-user@localmachine current-directory> 
+user@localmachine current-directory>
 
-*** Those on other systems have to use the tarball: 
+*** Those on other systems have to use the tarball:
 
-user@localmachine$ wget --no-check-certificate --output-document=fizsh-1.0.5.tar.gz "https://downloads.sourceforge.net/project/fizsh/fizsh-1.0.5.tar.gz?r=&ts=1294511723&use_mirror=mesh" 
+user@localmachine$ wget --no-check-certificate --output-document=fizsh-1.0.6.tar.gz "https://downloads.sourceforge.net/project/fizsh/fizsh-1.0.6.tar.gz"
 
-Extract it: 
+Extract it:
 
-user@localmachine$ tar -xvzf fizsh-1.0.5.tar.gz 
+user@localmachine$ tar -xvzf fizsh-1.0.6.tar.gz
 
-change directory: 
+Change directory:
 
-user@localmachine$ cd fizsh-1.0.5
+user@localmachine$ cd fizsh-1.0.6
 
-configure and install: 
+Configure and install:
 
-user@localmachine$ ./configure && make && sudo make install 
+user@localmachine$ ./configure && make && sudo make install
+
+Or if you do not have access to a privileged account you may install fizsh in your home directory:
+
+user@localmachine$ export PATH=$PATH:$HOME/bin && ./configure --prefix=$HOME && make && make install
+
 
