@@ -17,7 +17,9 @@ In order to install FIZSH, you may run the following:
 
     user@localmachine$ cd ./fizsh/fizsh-dev
 
-    user@localmachine$ ./configure # or ./configure --bindir=/usr/bin/ --mandir=/usr/share/man/ --sysconfdir=/etc/fizsh on Debian based systems
+    user@localmachine$ ./configure # or ./configure --bindir=/usr/bin/ \
+                           --mandir=/usr/share/man/ --sysconfdir=/etc/fizsh \
+			   on Debian based systems
     checking for a BSD-compatible install... /usr/bin/install -c
     ...
 
@@ -48,7 +50,8 @@ Those without access to a privileged account may install fizsh in their home dir
 
 Users on Debian based systems can install the latest binary package from [Sourceforge][1]: 
 
-    user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.6-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.6-1_all.deb"
+    user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.6-1_all.deb \ 
+                           "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.6-1_all.deb"
 
     user@localmachine$ sudo dpkg -i ./fizsh_1.0.6-1_all.deb
     Selecting previously deselected package fizsh.
