@@ -3,7 +3,7 @@
 # /usr/bin/fizsh
 #
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2011 Guido van Steen
+# Copyright (c) 2011 - 2014 Guido van Steen
 # All rights reserved.
 #
 #
@@ -32,172 +32,136 @@
 
 ################################################
 #
-# Set the version number 
+# Set the fizsh dot dir, the bin dir and the sysconf (etc) dir
 #
-export _fizsh_F_CENTRAL_VERSION=1.0.5
-
-################################################
-#
-# We will see if a local upgrade is needed
-#
-export _fizsh_F_FIZSH=fizsh
 export _fizsh_F_DOT_DIR=$HOME/.fizsh
-export _fizsh_F_BIN_DIR=$(which $_fizsh_F_FIZSH | sed -e "s/\/$_fizsh_F_FIZSH//i")
+
+export _fizsh_F_FIZSH=fizsh
+
+_fizsh_F_FIZSH_INSTALLED_AND_ON_PATH=$(type $_fizsh_F_FIZSH)
+[[ "$?" -ne 0 ]] && echo "_fizsh: Make sure that fizsh is installed correctly and that your path is set accordingly" && exit 1
+
+export _fizsh_F_FIZSH_FULL_PATH=$(which $_fizsh_F_FIZSH)
+export _fizsh_F_BIN_DIR=$(echo $_fizsh_F_FIZSH_FULL_PATH | sed -e "s/\/$_fizsh_F_FIZSH//i")
 export _fizsh_F_ETC_DIR=$(echo $_fizsh_F_BIN_DIR | sed -e "s/bin/etc/i")/$_fizsh_F_FIZSH
-[[ $_fizsh_F_ETC_DIR == "/usr/etc/$_fizsh_F_FIZSH" ]] && export _fizsh_F_ETC_DIR="/etc/$_fizsh_F_FIZSH" # in practice noone uses "/usr/etc/"
+[[ $_fizsh_F_ETC_DIR == "/usr/etc/$_fizsh_F_FIZSH" ]] && export _fizsh_F_ETC_DIR="/etc/$_fizsh_F_FIZSH" # needed on systems like Debian
 
-export _fizsh_F_VERSION_FILE=".fizsh-version"
-if [[ -f $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE ]]; then
-	export _fizsh_F_LOCAL_VERSION=$(cat $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE)
-else
-	export _fizsh_F_LOCAL_VERSION=""
+################################################
+#
+# Set the other environment variables
+#
+export _fizsh_F_SYNTAX=zsh-syntax-highlighting.zsh
+export _fizsh_F_HIGHLIGHTERS_DIR=highlighters
+export _fizsh_F_SEARCH=zsh-history-substring-search.zsh
+export _fizsh_F_PROMPT=fizsh-prompt.zsh
+export _fizsh_F_FIZSHRC=fizshrc.zsh
+export _fizsh_F_MISC=fizsh-miscellaneous.zsh
+export _fizsh_F_VERSION_FILE=.fizsh-version
+
+################################################
+#
+# Set the version number
+#
+export _fizsh_F_CENTRAL_VERSION=1.0.6
+if [[ ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE ]]; then
+  touch $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE
 fi
-# $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE is only modified when fizsh is run by a local user, after a newer or older version of fizsh 
-# has been installed on the central system.
-# $_fizsh_F_LOCAL_VERSION is then made equal to $_fizsh_F_CENTRAL_VERSION
-
-export _fizsh_F_UPGRADE_LOCAL=0
-[[ $_fizsh_F_LOCAL_VERSION != $_fizsh_F_CENTRAL_VERSION ]] && export _fizsh_F_UPGRADE_LOCAL=1
-
-[[ $_fizsh_F_UPGRADE_LOCAL -eq 1 && -d $_fizsh_F_DOT_DIR ]] && cp $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH
+export _fizsh_F_LOCAL_VERSION=$(cat $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE)
 
 ################################################
 #
-# When $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH is called there are two possiblities:
+# If a new central version is detected (for the first time) the old config files are removed
 #
-# 1) $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH does not exist yet. This will only be true when a
-#    local user runs fizsh for the first time. In this case the remainder of 
-#    $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH is sourced.
-#    This will lead to the installation of $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH later on, so
-#    that $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH will exist next time 
-#    $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH is called
-#
-# 2) $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH exists. In this case $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH 
-#    will be sourced instead of $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH
-#
-if [[ $0 != $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH && -f $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH ]]; then
-  source $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH
+if [[ $_fizsh_F_LOCAL_VERSION != $_fizsh_F_CENTRAL_VERSION ]]; then 
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_SEARCH
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_MISC
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH
+  rm -rf $_fizsh_F_DOT_DIR/.zshrc
+  export _fizsh_F_LOCAL_VERSION=$_fizsh_F_CENTRAL_VERSION
+  echo $_fizsh_F_LOCAL_VERSION > $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE
+fi 
 
 ################################################
 #
-# set the other environment variables
+# Print the welcome message
 #
-else
-  export _fizsh_F_SYNTAX=zsh-syntax-highlighting.zsh
-  export _fizsh_F_HIGHLIGHTERS_DIR=highlighters
-  export _fizsh_F_SEARCH=zsh-history-substring-search.zsh
-  export _fizsh_F_PROMPT=fizsh-prompt.zsh
-  export _fizsh_F_FIZSHRC=fizshrc.zsh
-  export _fizsh_F_MISC=fizsh-miscellaneous.zsh
-  export _fizsh_F_GOOGLECODE=http://fizsh.googlecode.com/git/fizsh-dev/scripts
-  export _fizsh_F_TMP_DIR=/tmp/$_fizsh_F_FIZSH
+function _fizsh-welcome-message () {
+  echo 'welcome to fizsh, the friendly interactive zshell'
+  echo -e 'type \033[03;32mman fizsh\033[00m for instructions on how to use fizsh'
+}
 
 ################################################
 #
-# upgrade depending on the version numbers of "$_fizsh_F_UPGRADE_LOCAL"
+# Print the usage message
 #
-  if [[ $_fizsh_F_UPGRADE_LOCAL -eq 1 ]]; then
-    "rm" -rf $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT
-    "rm" -rf $_fizsh_F_DOT_DIR/$_fizsh_F_SEARCH
-    "rm" -rf $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
-    "rm" -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR
-    "rm" -rf $_fizsh_F_DOT_DIR/$_fizsh_F_MISC
-    "rm" -rf $_fizsh_F_DOT_DIR/$_fizsh_F_MISC
-    "rm" -rf $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH
-    "rm" -rf $_fizsh_F_DOT_DIR/.zshrc
-  fi
+function _fizsh-usage-message () {
+  echo "Usage: fizsh [<options>] [<argument> ...]"
+  echo "  -h, --help          show this message, then exit"
+  echo "  -l, --login         start a login shell"
+  echo "  -v, --version       show fizsh version number, then exit"
+  echo ""
+  echo "fizsh is a interactive front end to zsh. Options and"
+  echo "arguments not mentioned here cause fizsh to revert to zsh."
+}
 
 ################################################
 #
-# print the help screen
+# Print the goodbye message
 #
-  function echo-usage() {
-    echo "Usage: fizsh [<options>] [<argument> ...]"
-    echo "  -h, --help         show this message, then exit"
-    echo "  -l, --login         start a login shell"
-    echo "  -v, --version       show fizsh version number, then exit"
-    echo ""
-    echo "fizsh is a interactive front end to zsh. Options and"
-    echo "arguments not mentioned here cause fizsh to revert to zsh."
-  }
+function _fizsh-goodbye-message () {
+  echo ''
+  echo 'Goodbye'
+}
 
 ################################################
 #
 # Fizsh can be called with three optons: "-v"/"--version", "-h"/"--help" and "-l"/"--login".
 #
-  if [[ ( $@ == "--version" ) || ( $@ == "-v" ) ]]; then
-    echo $_fizsh_F_LOCAL_VERSION
-  elif [[ ( $@ == "--help" ) || ( $@ == "-h" ) ]]; then
-    echo-usage
-  elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
-    [[ $+ZDOTDIR -eq 1 ]] && export _fizsh_F_OLD_ZDOTDIR=$ZDOTDIR
-
-    if [[ ! -d $_fizsh_F_DOT_DIR ]]; then
-      mkdir $_fizsh_F_DOT_DIR
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/.fizshrc ) ]]; then
-      touch $_fizsh_F_DOT_DIR/.fizshrc
-      chmod +x $_fizsh_F_DOT_DIR/.fizshrc
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT ) ]]; then
-      cp $_fizsh_F_ETC_DIR/$_fizsh_F_PROMPT $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_SEARCH ) ]]; then
-      cp $_fizsh_F_ETC_DIR/$_fizsh_F_SEARCH $_fizsh_F_DOT_DIR/$_fizsh_F_SEARCH
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX ) ]]; then
-      cp $_fizsh_F_ETC_DIR/$_fizsh_F_SYNTAX $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
-    fi
-    if [[ ( ! -d $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR ) ]]; then
-      mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh ) ]]; then
-      mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets
-      cp $_fizsh_F_ETC_DIR/brackets-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh ) ]]; then
-      mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor
-      cp $_fizsh_F_ETC_DIR/cursor-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh ) ]]; then
-      mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main
-      cp $_fizsh_F_ETC_DIR/main-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh ) ]]; then
-      mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern
-      cp $_fizsh_F_ETC_DIR/pattern-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh ) ]]; then
-      mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root
-      cp $_fizsh_F_ETC_DIR/root-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_MISC ) ]]; then
-      cp $_fizsh_F_ETC_DIR/$_fizsh_F_MISC $_fizsh_F_DOT_DIR/$_fizsh_F_MISC
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH ) ]]; then
-      cp $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/.zshrc ) ]]; then
-      cp $_fizsh_F_ETC_DIR/$_fizsh_F_FIZSHRC $_fizsh_F_DOT_DIR/.zshrc
-    fi
-    if [[ ( ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE ) ]]; then
-      echo $_fizsh_F_CENTRAL_VERSION > $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE
-    fi
-    export ZDOTDIR=$_fizsh_F_DOT_DIR
-    echo 'welcome to fizsh, the friendly interactive zshell'
-    echo -e 'type \033[03;32mman fizsh\033[00m for instructions on how to use fizsh'
-    if [[ ( $@ == "" ) ]]; then
-      zsh
-    else
-      zsh -l
-    fi
-    echo ''
-    echo ''
-    echo 'goodbye'
-    [[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR
-    [[ $+_fizsh_F_OLD_ZDOTDIR -eq 1 ]] && ZDOTDIR=$_fizsh_F_OLD_ZDOTDIR
-    unset _fizsh_F_OLD_ZDOTDIR
-  else
-    zsh $@ # this makes sure that fizsh also works with ssh, sftp and so on.
+if [[ ( $@ == "--version" ) || ( $@ == "-v" ) ]]; then
+  echo "fizsh, version "$_fizsh_F_LOCAL_VERSION
+elif [[ ( $@ == "--help" ) || ( $@ == "-h" ) ]]; then
+  _fizsh-usage-message
+elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
+  [[ $+ZDOTDIR -eq 1 ]] && export _fizsh_F_OLD_ZDOTDIR=$ZDOTDIR
+  mkdir -p $_fizsh_F_DOT_DIR
+  mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets
+  mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor
+  mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main
+  mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern
+  mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root
+  if [[ ( ! -f $_fizsh_F_DOT_DIR/.fizshrc ) ]]; then
+    touch $_fizsh_F_DOT_DIR/.fizshrc
+    chmod +x $_fizsh_F_DOT_DIR/.fizshrc
   fi
+  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_PROMPT $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT
+  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_SEARCH $_fizsh_F_DOT_DIR/$_fizsh_F_SEARCH
+  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_SYNTAX $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
+  cp -u $_fizsh_F_ETC_DIR/brackets-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
+  cp -u $_fizsh_F_ETC_DIR/cursor-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh
+  cp -u $_fizsh_F_ETC_DIR/main-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
+  cp -u $_fizsh_F_ETC_DIR/pattern-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
+  cp -u $_fizsh_F_ETC_DIR/root-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
+  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_MISC $_fizsh_F_DOT_DIR/$_fizsh_F_MISC
+  cp -u $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH
+  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_FIZSHRC $_fizsh_F_DOT_DIR/.zshrc
+  export ZDOTDIR=$_fizsh_F_DOT_DIR
+  _fizsh-welcome-message
+  if [[ ( $@ == "" ) ]]; then
+    zsh
+  else
+    zsh -l
+  fi
+  _fizsh-goodbye-message
+  [[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR
+  [[ $+_fizsh_F_OLD_ZDOTDIR -eq 1 ]] && ZDOTDIR=$_fizsh_F_OLD_ZDOTDIR
+  unset _fizsh_F_OLD_ZDOTDIR
+else
+  zsh $@ # this makes sure that fizsh also works with ssh, sftp and so on.
 fi

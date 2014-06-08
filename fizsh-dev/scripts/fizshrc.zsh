@@ -39,51 +39,73 @@
 # The script was tested on Linux. It may need some modifications to work on
 # other systems.
 
+################################################
+#
 # Set the environment variables
 #
 0=fizsh # Trick to let people check wether fizsh is running, i.e. whether $0 is "fizsh"
 SHELL=$(which fizsh)
 
+################################################
+#
 # History
 #
 HISTFILE=$_fizsh_F_DOT_DIR/.fizsh_history
 HISTSIZE=100000
 SAVEHIST=100000
 
+################################################
+#
 # Append to the history file instead of overwriting it and do it immediately
 # when a command is executed.
 #
 setopt append_history
 setopt inc_append_history
 
+################################################
+#
 # Avoid duplicate entries in the history file
 #
 setopt hist_ignore_all_dups
 
+################################################
+#
 # Reduce whitespace in history
 #
 setopt hist_reduce_blanks
 
+################################################
+#
 # Reduce whitespace in history
 #
 setopt hist_ignore_space
 
+################################################
+#
 # Allow interactive comments
 #
 setopt interactive_comments
 
+################################################
+#
 # When entering a nonexistent command name automatically try to find a similar one.
 #
 setopt correct
 
+################################################
+#
 # Get rid of beeps
 #
 setopt no_beep
 
+################################################
+#
 # Set the prompt
 #
 setopt prompt_subst
 
+################################################
+#
 # PS1='$(fizsh-prompt)'
 # for some reason turning this into a sourcable function does not work
 # see below as well
@@ -94,11 +116,15 @@ else
   PS1=''
 fi
 
+################################################
+#
 # Set the terminal title
 #
 [[ "xterm" =~ $TERM ]] && precmd () {print -Pn "\e]0;$0: %n @ %M: %~\a"}
 [[ "screen" =~ $TERM ]] && precmd () {print -Pn "\e]0;$0: %n @ %M [screened]: %~\a"}
 
+################################################
+#
 # Initiate completion system
 #
 autoload -U compinit
@@ -109,6 +135,8 @@ fi
 
 zmodload zsh/complist
 
+################################################
+#
 # Enable color support of ls
 #
 if [[ "$TERM" != "dumb" ]]; then
@@ -118,11 +146,15 @@ if [[ "$TERM" != "dumb" ]]; then
   fi
 fi
 
+################################################
+#
 # Use colored output
 #
 autoload -U colors && colors
 alias grep="grep --color=auto"
 
+################################################
+#
 # Source zsh-syntax-highlighting.zsh, zsh-history-substring-search.zsh,
 # fizsh-miscellaneous.zsh and fizshrc
 #
@@ -130,14 +162,20 @@ source $_fizsh_F_DOT_DIR/zsh-syntax-highlighting.zsh
 source $_fizsh_F_DOT_DIR/zsh-history-substring-search.zsh
 source $_fizsh_F_DOT_DIR/fizsh-miscellaneous.zsh
 
+################################################
+#
 # source $_fizsh_F_DOT_DIR/fizsh-prompt # would be nice as well. However,
 # for some reason sourcing the prompt as a function from a file
-# does not work properly: after a while the prompt get out of sync
+# does not work properly: after a while the prompt gets out of sync
 # the same thing seems to happen when we use the precmd function
-# to echo the prompt. A bug in ZSH!?
+# to echo the prompt. A bug in ZSH!? Anyway, for this reason 
+# source $_fizsh_F_DOT_DIR/fizsh-prompt.zsh has been commented out.
 #
+#source $_fizsh_F_DOT_DIR/fizsh-prompt.zsh
 source $_fizsh_F_DOT_DIR/.fizshrc
 
+################################################
+#
 # Give $ZDOTDIR its original value again so that we can call zsh
 # without implicitly calling fizsh.
 #

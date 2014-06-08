@@ -1,5 +1,7 @@
-The file fizsh.1 has been created from fizsh.pod using pod2man.
+The file fizsh.1 has be created from fizsh.pod using pod2man.
 
 * To construct it use the following command:
 
-$ pod2man -c "" -r "fizsh 1.0.3" ./fizsh.pod > ./fizsh.1
+$ pod2man --utf8 -c "" -r "fizsh 1.0.6" ./fizsh.pod > ./fizsh.1
+
+* This is what happens in Makefile.am

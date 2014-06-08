@@ -10,4 +10,40 @@
 # export DH_VERBOSE=1
 
 %:
-	dh $@ --with autotools-dev
+	dh $@
+
+# without the following override the ./configure script would be called with two
+# unrecognized options: --disable-maintainer-mode, --disable-dependency-tracking
+override_dh_auto_configure:
+	./configure \
+	--prefix=/usr \
+	--includedir=\${prefix}/include \
+	--mandir=\${prefix}/share/man \
+	--infodir=\${prefix}/share/info \
+	--sysconfdir=/etc \
+	--localstatedir=/var
+
+# the scripts in the "./scripts/" directory of the source package are copied
+# to both "./debian/usr/bin/" and "./debian/etc/fizsh/". they are also copied to
+# "./debian/fizsh/usr/share/fizsh/", but they are not meant to be copied there.
+# moreover they end up there without the executable bit, which causes lintian
+# to complain about "script-not-executable". therefore they are explicitly removed
+# after dh_install.
+override_dh_install:
+	dh_install
+	[ -d debian/fizsh/usr/share/fizsh ] && rm -rf debian/fizsh/usr/share/fizsh || true
+
+# create the manpage using pod2man, which is a utility included in the perl
+# package. afterwards some cleaning is done.
+override_dh_installman:
+	mkdir -p debian/pod2man
+	pod2man --utf8 -c "" -r "fizsh 1.0.6" man/fizsh.pod > debian/pod2man/fizsh.1
+	dh_installman debian/pod2man/fizsh.1
+	[ -d debian/pod2man ] && rm -rf debian/pod2man || true
+	[ -d debian/fizsh/share ] && rm -rf debian/fizsh/share || true
+
+# the file called man/fizsh.1 is created during the previous process. it is removed
+# by overriding dh_builddeb, which is the last process of dh.
+override_dh_builddeb:
+	dh_builddeb
+	[ -f man/fizsh.1 ] && rm -rf man/fizsh.1 || true

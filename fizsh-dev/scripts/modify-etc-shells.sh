@@ -28,20 +28,24 @@
 #
 # modify-etc-shells.sh
 
+_fizsh_uid=$(id -u)
+
 _fizsh_etc_shells="/etc/shells"
 _fizsh_temp_shells="/etc/shells.tmp"
 _fizsh_in_etc_shells=$(cat $_fizsh_etc_shells | grep ^"$2"$)
 
-if [ $1 = "--add" ]; then
-  if [ "X"$_fizsh_in_etc_shells = "X" ]; then
-    cp $_fizsh_etc_shells $_fizsh_temp_shells
-    echo $2 >> $_fizsh_temp_shells
-    mv $_fizsh_temp_shells $_fizsh_etc_shells
+if [ $_fizsh_uid -eq 0 ]; then # fizsh can only be manipulated by $uid 0 
+  if [ $1 = "--add" ]; then
+    if [ "X"$_fizsh_in_etc_shells = "X" ]; then
+      cp $_fizsh_etc_shells $_fizsh_temp_shells
+      echo $2 >> $_fizsh_temp_shells
+      mv $_fizsh_temp_shells $_fizsh_etc_shells
+    fi 
   fi
-fi
-if [ $1 = "--remove" ]; then
-  if [ ! "X"$_fizsh_in_etc_shells = "X" ]; then
-    cat $_fizsh_etc_shells | grep -v ^"$2"$ > $_fizsh_temp_shells
-    mv $_fizsh_temp_shells $_fizsh_etc_shells
+  if [ $1 = "--remove" ]; then
+    if [ ! "X"$_fizsh_in_etc_shells = "X" ]; then
+      cat $_fizsh_etc_shells | grep -v ^"$2"$ > $_fizsh_temp_shells
+      mv $_fizsh_temp_shells $_fizsh_etc_shells
+    fi
   fi
 fi

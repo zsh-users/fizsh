@@ -72,9 +72,6 @@ function history-substring-search-down() {
 zle -N history-substring-search-up
 zle -N history-substring-search-down
 
-bindkey '\e[A' history-substring-search-up
-bindkey '\e[B' history-substring-search-down
-
 #-----------------------------------------------------------------------------
 # implementation details
 #-----------------------------------------------------------------------------
@@ -89,32 +86,20 @@ zmodload -F zsh/parameter
 #
 if [[ $+functions[_zsh_highlight] -eq 0 ]]; then
   #
-  # Dummy implementation of _zsh_highlight()
-  # that simply removes existing highlights
+  # Dummy implementation of _zsh_highlight() that
+  # simply removes any existing highlights when the
+  # user inserts printable characters into $BUFFER.
   #
   function _zsh_highlight() {
-    region_highlight=()
-  }
-
-  #
-  # Remove existing highlights when the user
-  # inserts printable characters into $BUFFER
-  #
-  function ordinary-key-press() {
     if [[ $KEYS == [[:print:]] ]]; then
       region_highlight=()
     fi
-    zle .self-insert
   }
-  zle -N self-insert ordinary-key-press
 
   #
-  # Override ZLE widgets to invoke _zsh_highlight()
+  # The following snippet was taken from the zsh-syntax-highlighting project:
   #
-  # https://github.com/nicoulaj/zsh-syntax-highlighting/blob/
-  # bb7fcb79fad797a40077bebaf6f4e4a93c9d8163/zsh-syntax-highlighting.zsh#L121
-  #
-  #--------------8<-------------------8<-------------------8<-----------------
+  # https://github.com/zsh-users/zsh-syntax-highlighting/blob/56b134f5d62ae3d4e66c7f52bd0cc2595f9b305b/zsh-syntax-highlighting.zsh#L126-161
   #
   # Copyright (c) 2010-2011 zsh-syntax-highlighting contributors
   # All rights reserved.
@@ -145,51 +130,53 @@ if [[ $+functions[_zsh_highlight] -eq 0 ]]; then
   # LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
   # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
   # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  #
+  #--------------8<-------------------8<-------------------8<-----------------
+  # Rebind all ZLE widgets to make them invoke _zsh_highlights.
+  _zsh_highlight_bind_widgets()
+  {
+    # Load ZSH module zsh/zleparameter, needed to override user defined widgets.
+    zmodload zsh/zleparameter 2>/dev/null || {
+      echo 'zsh-syntax-highlighting: failed loading zsh/zleparameter.' >&2
+      return 1
+    }
 
-  # Load ZSH module zsh/zleparameter, needed to override user defined widgets.
-  zmodload zsh/zleparameter 2>/dev/null || {
-    echo 'zsh-syntax-highlighting: failed loading zsh/zleparameter, exiting.' >&2
-    return -1
-  }
+    # Override ZLE widgets to make them invoke _zsh_highlight.
+    local cur_widget
+    for cur_widget in ${${(f)"$(builtin zle -la)"}:#(.*|_*|orig-*|run-help|which-command|beep)}; do
+      case $widgets[$cur_widget] in
 
-  # Override ZLE widgets to make them invoke _zsh_highlight.
-  for event in ${${(f)"$(zle -la)"}:#(_*|orig-*|.run-help|.which-command)}; do
-    if [[ "$widgets[$event]" == completion:* ]]; then
-      eval "zle -C orig-$event ${${${widgets[$event]}#*:}/:/ } ; $event() { builtin zle orig-$event && _zsh_highlight } ; zle -N $event"
-    else
-      case $event in
-        accept-and-menu-complete)
-          eval "$event() { builtin zle .$event && _zsh_highlight } ; zle -N $event"
-          ;;
+        # Already rebound event: do nothing.
+        user:$cur_widget|user:_zsh_highlight_widget_*);;
 
-        # The following widgets should NOT remove any previously
-        # applied highlighting. Therefore we do not remap them.
-        .forward-char|.backward-char|.up-line-or-history|.down-line-or-history)
-          ;;
+        # User defined widget: override and rebind old one with prefix "orig-".
+        user:*) eval "zle -N orig-$cur_widget ${widgets[$cur_widget]#*:}; \
+                      _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget -- \"\$@\" && _zsh_highlight }; \
+                      zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
 
-        .*)
-          clean_event=$event[2,${#event}] # Remove the leading dot in the event name
-          case ${widgets[$clean_event]-} in
-            (completion|user):*)
-              ;;
-            *)
-              eval "$clean_event() { builtin zle $event && _zsh_highlight } ; zle -N $clean_event"
-              ;;
-          esac
-          ;;
-        *)
-          ;;
+        # Completion widget: override and rebind old one with prefix "orig-".
+        completion:*) eval "zle -C orig-$cur_widget ${${widgets[$cur_widget]#*:}/:/ }; \
+                            _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget -- \"\$@\" && _zsh_highlight }; \
+                            zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
+
+        # Builtin widget: override and make it call the builtin ".widget".
+        builtin) eval "_zsh_highlight_widget_$cur_widget() { builtin zle .$cur_widget -- \"\$@\" && _zsh_highlight }; \
+                       zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
+
+        # Default: unhandled case.
+        *) echo "zsh-syntax-highlighting: unhandled ZLE widget '$cur_widget'" >&2 ;;
       esac
-    fi
-  done
-  unset event clean_event
+    done
+  }
   #-------------->8------------------->8------------------->8-----------------
+
+  _zsh_highlight_bind_widgets
 fi
 
 function _history-substring-search-begin() {
   setopt localoptions extendedglob
 
-  _history_substring_search_move_cursor_eol=false
+  _history_substring_search_refresh_display=
   _history_substring_search_query_highlight=
 
   #
@@ -259,8 +246,10 @@ function _history-substring-search-end() {
 
   _history_substring_search_result=$BUFFER
 
-  # move the cursor to the end of the command line
-  if [[ $_history_substring_search_move_cursor_eol == true ]]; then
+  # the search was succesful so display the result properly by clearing away
+  # existing highlights and moving the cursor to the end of the result buffer
+  if [[ $_history_substring_search_refresh_display -eq 1 ]]; then
+    region_highlight=()
     CURSOR=${#BUFFER}
   fi
 
@@ -285,7 +274,7 @@ function _history-substring-search-end() {
   # read -k -t 200 && zle -U $REPLY
 
   # Exit successfully from the history-substring-search-* widgets.
-  true
+  return 0
 }
 
 function _history-substring-search-up-buffer() {
@@ -311,10 +300,10 @@ function _history-substring-search-up-buffer() {
 
   if [[ $#buflines -gt 1 && $CURSOR -ne $#BUFFER && $#xlbuflines -ne 1 ]]; then
     zle up-line-or-history
-    return true
+    return 0
   fi
 
-  false
+  return 1
 }
 
 function _history-substring-search-down-buffer() {
@@ -340,10 +329,10 @@ function _history-substring-search-down-buffer() {
 
   if [[ $#buflines -gt 1 && $CURSOR -ne $#BUFFER && $#xrbuflines -ne 1 ]]; then
     zle down-line-or-history
-    return true
+    return 0
   fi
 
-  false
+  return 1
 }
 
 function _history-substring-search-up-history() {
@@ -362,10 +351,10 @@ function _history-substring-search-up-history() {
       zle up-line-or-history
     fi
 
-    return true
+    return 0
   fi
 
-  false
+  return 1
 }
 
 function _history-substring-search-down-history() {
@@ -378,21 +367,31 @@ function _history-substring-search-down-history() {
     # going down from the absolute top of history
     if [[ $HISTNO -eq 1 && -z $BUFFER ]]; then
       BUFFER=${history[1]}
-      _history_substring_search_move_cursor_eol=true
+      _history_substring_search_refresh_display=1
 
     # going down from somewhere above the bottom of history
     else
       zle down-line-or-history
     fi
 
-    return true
+    return 0
   fi
 
-  false
+  return 1
+}
+
+function _history-substring-search-not-found() {
+  #
+  # Nothing matched the search query, so put it back into the $BUFFER while
+  # highlighting it accordingly so the user can revise it and search again.
+  #
+  _history_substring_search_old_buffer=$BUFFER
+  BUFFER=$_history_substring_search_query
+  _history_substring_search_query_highlight=$HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND
 }
 
 function _history-substring-search-up-search() {
-  _history_substring_search_move_cursor_eol=true
+  _history_substring_search_refresh_display=1
 
   #
   # Highlight matches during history-substring-up-search:
@@ -448,9 +447,7 @@ function _history-substring-search-up-search() {
     #    to highlight the current buffer.
     #
     (( _history_substring_search_match_index-- ))
-    _history_substring_search_old_buffer=$BUFFER
-    BUFFER=$_history_substring_search_query
-    _history_substring_search_query_highlight=$HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND
+    _history-substring-search-not-found
 
   elif [[ $_history_substring_search_match_index -eq $_history_substring_search_matches_count_plus ]]; then
     #
@@ -467,11 +464,17 @@ function _history-substring-search-up-search() {
     (( _history_substring_search_match_index-- ))
     BUFFER=$_history_substring_search_old_buffer
     _history_substring_search_query_highlight=$HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND
+
+  else
+    #
+    # We are at the beginning of history and there are no further matches.
+    #
+    _history-substring-search-not-found
   fi
 }
 
 function _history-substring-search-down-search() {
-  _history_substring_search_move_cursor_eol=true
+  _history_substring_search_refresh_display=1
 
   #
   # Highlight matches during history-substring-up-search:
@@ -528,9 +531,7 @@ function _history-substring-search-down-search() {
     #    to highlight the current buffer.
     #
     (( _history_substring_search_match_index++ ))
-    _history_substring_search_old_buffer=$BUFFER
-    BUFFER=$_history_substring_search_query
-    _history_substring_search_query_highlight=$HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND
+    _history-substring-search-not-found
 
   elif [[ $_history_substring_search_match_index -eq 0 ]]; then
     #
@@ -547,6 +548,12 @@ function _history-substring-search-down-search() {
     (( _history_substring_search_match_index++ ))
     BUFFER=$_history_substring_search_old_buffer
     _history_substring_search_query_highlight=$HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND
+
+  else
+    #
+    # We are at the end of history and there are no further matches.
+    #
+    _history-substring-search-not-found
   fi
 }
 

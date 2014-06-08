@@ -107,7 +107,7 @@ typeset -gA ZSH_HIGHLIGHT_STYLES
 # Returns 0 if the buffer has changed since _zsh_highlight was last called.
 _zsh_highlight_buffer_modified()
 {
-  [[ ${_ZSH_HIGHLIGHT_PRIOR_BUFFER:-} != $BUFFER ]]
+  [[ "${_ZSH_HIGHLIGHT_PRIOR_BUFFER:-}" != "$BUFFER" ]]
 }
 
 # Whether the cursor has moved or not.
@@ -142,16 +142,16 @@ _zsh_highlight_bind_widgets()
 
       # User defined widget: override and rebind old one with prefix "orig-".
       user:*) eval "zle -N orig-$cur_widget ${widgets[$cur_widget]#*:}; \
-                    _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget \"\$@\" && _zsh_highlight }; \
+                    _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget -- \"\$@\" && _zsh_highlight }; \
                     zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
 
       # Completion widget: override and rebind old one with prefix "orig-".
       completion:*) eval "zle -C orig-$cur_widget ${${widgets[$cur_widget]#*:}/:/ }; \
-                          _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget \"\$@\" && _zsh_highlight }; \
+                          _zsh_highlight_widget_$cur_widget() { builtin zle orig-$cur_widget -- \"\$@\" && _zsh_highlight }; \
                           zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
 
       # Builtin widget: override and make it call the builtin ".widget".
-      builtin) eval "_zsh_highlight_widget_$cur_widget() { builtin zle .$cur_widget \"\$@\" && _zsh_highlight }; \
+      builtin) eval "_zsh_highlight_widget_$cur_widget() { builtin zle .$cur_widget -- \"\$@\" && _zsh_highlight }; \
                      zle -N $cur_widget _zsh_highlight_widget_$cur_widget";;
 
       # Default: unhandled case.
@@ -198,7 +198,7 @@ _zsh_highlight_bind_widgets || {
 }
 
 # Resolve highlighters directory location.
-_zsh_highlight_load_highlighters "${ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR:-${0:h}/highlighters}" || {
+_zsh_highlight_load_highlighters "${ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR:-${${0:A}:h}/highlighters}" || {
   echo 'zsh-syntax-highlighting: failed loading highlighters, exiting.' >&2
   return 1
 }

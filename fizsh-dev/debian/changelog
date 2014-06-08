@@ -1,30 +1,52 @@
-fizsh (1.0.5-2) unstable; urgency=low
-
-  * Increased standards-version to 3.9.5. 
-
-  * Corrected wrong weekday in debian-changelog
-
- -- Guido van Steen <vansteen@users.sourceforge.net>  Sun, 25 May 2014 07:41:30 +0200
-
-fizsh (1.0.5-1) unstable; urgency=low
+fizsh (1.0.6-1) unstable; urgency=low
 
   * New upstream version
 
-  * Version 1.0.3 and 1.0.4 will be skipped. Versions 1.0.5 and 1.0.4 are both
-  bug fix releases on top of version 1.0.3
+  * Increased standards-version to 3.9.5. This yielded 2 warnings:
+  syntax-error-in-dep5-copyright and debian-watch-may-check-gpg-signature
+
+  * Corrected the dep5 syntax errors in ./debian/copyright
+
+  * Upgraded from dep5 to copyright-format 1.0
+
+  * Updated the years in ./debian/copyright
+
+  * Added the option "pgpsigurlmangle" to ./debian/watch
+
+  * Added ./debian/upstream/signing-key.asc
+
+  * Added ./debian/README with information on how to debianize a new version
+  of fizsh
+
+  * Increased debian/compat to '9'
+
+  * Increased the Build-depend on debhelper to '(>= 9)'
+
+  * Added a build-depend on perl in order to enable the use of pod2man
+
+  * Added override_dh_auto_configure. Without this override ./configure is
+  called with unknown parameters
+
+  * Added override_dh_install. dh_install copies some scripts to both
+  debian/fizsh/etc/fizsh and debian/fizsh/usr/share/fizsh. override_dh_install
+  removes them from debian/fizsh/usr/share/fizsh again
+
+  * Added override_dh_installman. This override causes pod2man to create the
+  manpage. It also takes care of some cleaning
+
+  * Removed debian/fizsh.manpages because it is not needed anymore. 
+  override_dh_installman takes care of creating the man page
+
+  * Added override_dh_builddeb. This override removes a file called man/fizsh.1
+  which is created during the debian building process
 
   * Removed the ./debian/patches directory and ./debian/source/options.
-  Upstream corrected an issue in the man page, which the patch was addressing
+  Upstream corrected the issue, which the patch was addressing
 
-  * Added " --with autotools-dev" to ./debian/rules. "--with autotools-dev" 
-  reflects the autotools-dev Build-Depend in ./debian/control.
-
-  * Corrected dep5 syntax errors in ./debian/copyright
-
- -- Guido van Steen <vansteen@users.sourceforge.net>  Sun, 23 Oct 2011 13:39:31 +0200
+ -- Guido van Steen <vansteen@users.sourceforge.net>  Sun, 25 May 2014 07:41:30 +0200
 
 fizsh (1.0.2-1) unstable; urgency=low
 
-  * Initial release (Closes: #611084)  
+  * Initial release (Closes: #611084)
 
  -- Guido van Steen <vansteen@users.sourceforge.net>  Tue, 09 Aug 2011 12:46:42 +0700

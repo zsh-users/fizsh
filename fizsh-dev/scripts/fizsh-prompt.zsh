@@ -28,6 +28,8 @@
 #
 # /etc/fizsh/fizsh-prompt
 
+################################################
+#
 # This file is not sourced (yet). So any garbage is automatically lost after this script completes.
 
 RED="%{"$'\033[03;31m'"%}"
@@ -36,6 +38,8 @@ BLACK="%{"$'\033[00m'"%}"
 [[ $UID -ne 0 ]] && _fizsh_promptcolor=$GREEN && _fizsh_user_token="> "
 [[ $UID -eq 0 ]] && _fizsh_promptcolor=$RED && _fizsh_user_token="# "
 
+################################################
+#
 #fizsh-prompt() { # turning this file into function does not work for some reason
 
   #title "fizsh" "%m:%55<...<%~"
