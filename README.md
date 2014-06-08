@@ -17,9 +17,8 @@ In order to install FIZSH, you may run the following:
 
     user@localmachine$ cd ./fizsh/fizsh-dev
 
-    user@localmachine$ ./configure # or ./configure --bindir=/usr/bin/ \
-                           --mandir=/usr/share/man/ --sysconfdir=/etc/fizsh \
-			   on Debian based systems
+    user@localmachine$ ./configure # or ./configure --bindir=/usr/bin/ --mandir=/usr/share/man/ \ 
+                           --sysconfdir=/etc/fizsh on Debian based systems
     checking for a BSD-compatible install... /usr/bin/install -c
     ...
 
