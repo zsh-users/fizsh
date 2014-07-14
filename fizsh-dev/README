@@ -1,0 +1,7 @@
+#!/usr/bin/env sh 
+#
+# In order to install fizsh one may use these commands:
+#
+./configure          # or "./configure --bindir=/usr/bin/ --mandir=/usr/share/man/ --sysconfdir=/etc/fizsh"
+make                 #
+make install         # or "sudo make install" for a system-wide installation
