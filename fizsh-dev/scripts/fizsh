@@ -62,8 +62,9 @@ export _fizsh_F_VERSION_FILE=.fizsh-version
 #
 # Set the version number
 #
-export _fizsh_F_CENTRAL_VERSION=1.0.6
+export _fizsh_F_CENTRAL_VERSION=1.0.7
 if [[ ! -f $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE ]]; then
+  mkdir -p $_fizsh_F_DOT_DIR
   touch $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE
 fi
 export _fizsh_F_LOCAL_VERSION=$(cat $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE)
