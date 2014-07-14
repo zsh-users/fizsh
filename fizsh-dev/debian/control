@@ -2,7 +2,7 @@ Source: fizsh
 Section: shells
 Priority: optional
 Maintainer: Guido van Steen <vansteen@users.sourceforge.net>
-Build-Depends: debhelper (>= 9), perl, autoconf, automake
+Build-Depends: debhelper (>= 9), autoconf, automake, perl
 Standards-Version: 3.9.5
 Homepage: http://sourceforge.net/projects/fizsh/
 
