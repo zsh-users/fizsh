@@ -1,11 +1,8 @@
 AUTOMAKE_OPTIONS = gnu
-SUBDIRS = src doc man scripts examples
-
-dist_pkgdata_DATA = $(srcdir)/scripts/*.zsh $(srcdir)/scripts/modify-etc-shells.sh $(srcdir)/scripts/fizsh $(srcdir)/man/fizsh.pod $(srcdir)/doc/copyright $(srcdir)/doc/changelog
-
-EXTRA_DIST = man
+SUBDIRS = doc man scripts
+EXTRA_DIST = doc man scripts 
 dist-hook:
-	rm -f $(distdir)/man/fizsh.1
+	rm -rf $(distdir)/Makefile $(distdir)/doc/Makefile $(distdir)/man/Makefile $(distdir)/scripts/Makefile $(distdir)/debian $(distdir)/man/fizsh.1 $(distdir)/autom4te.cache $(distdir)/config.status $(distdir)/config.log
 
 install-data-local:
 	$(srcdir)/scripts/modify-etc-shells.sh --add $(bindir)/fizsh || true
