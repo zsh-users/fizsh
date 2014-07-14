@@ -1,10 +1,10 @@
 *** For those using a Debian-based distribution, such as Ubuntu, there is a ".deb" archive file available:
 
-user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.6-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.6-1_all.deb"
+user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.7-1_all.deb "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.7-1_all.deb"
 
 The ".deb" archive can be installed by dpkg:
 
-user@localmachine$ sudo dpkg -i fizsh_1.0.6-1_all.deb
+user@localmachine$ sudo dpkg -i fizsh_1.0.7-1_all.deb
 user@localmachine$ fizsh
 Welcome to fizsh, the friendly interactive zshell
 Type man fizsh for instructions on how to use fizsh
@@ -12,8 +12,8 @@ user@localmachine current-directory>
 
 *** People on RPM-based systems may try:
 
-user@localmachine$ wget --no-check-certificate --output-document=fizsh-1.0.6-1.noarch.rpm "https://downloads.sourceforge.net/project/fizsh/fizsh-1.0.6-1.noarch.rpm"
-user@localmachine$ sudo rpm -Uhv fizsh-1.0.6-1.noarch.rpm
+user@localmachine$ wget --no-check-certificate --output-document=fizsh-1.0.7-1.noarch.rpm "https://downloads.sourceforge.net/project/fizsh/fizsh-1.0.7-1.noarch.rpm"
+user@localmachine$ sudo rpm -Uhv fizsh-1.0.7-1.noarch.rpm
 user@localmachine$ fizsh
 Welcome to fizsh, the friendly interactive zshell
 Type man fizsh for instructions on how to use fizsh
@@ -21,15 +21,15 @@ user@localmachine current-directory>
 
 *** Those on other systems have to use the tarball:
 
-user@localmachine$ wget --no-check-certificate --output-document=fizsh-1.0.6.tar.gz "https://downloads.sourceforge.net/project/fizsh/fizsh-1.0.6.tar.gz"
+user@localmachine$ wget --no-check-certificate --output-document=fizsh-1.0.7.tar.gz "https://downloads.sourceforge.net/project/fizsh/fizsh-1.0.7.tar.gz"
 
 Extract it:
 
-user@localmachine$ tar -xvzf fizsh-1.0.6.tar.gz
+user@localmachine$ tar -xvzf fizsh-1.0.7.tar.gz
 
 Change directory:
 
-user@localmachine$ cd fizsh-1.0.6
+user@localmachine$ cd fizsh-1.0.7
 
 Configure and install:
 
