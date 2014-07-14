@@ -1,3 +1,15 @@
+fizsh (1.0.8) UPSTREAM; urgency=low
+
+  * Release: 1.0.8
+
+  * In ./scripts/fizsh a function _fizsh_cp_u was defined to provide
+    a portable implementation of "cp -u" from GNU coreutils. 
+
+  * In ./scripts/fizsh instances of sed -e "s/bin/etc/i" were replaced
+    by sed -e "s/bin/etc/"
+
+  * In ./scripts/fizshrc.zsh compinit was replaced by compinit -u. 
+
 fizsh (1.0.7) UPSTREAM; urgency=low
 
   * Release: 1.0.7
