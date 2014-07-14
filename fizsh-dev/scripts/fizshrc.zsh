@@ -129,7 +129,7 @@ fi
 #
 autoload -U compinit
 if [[ $_fizsh_F_COMPINIT_STARTED -ne 1 ]]; then
-  compinit
+  compinit -u
   _fizsh_F_COMPINIT_STARTED=1
 fi
 
