@@ -32,6 +32,17 @@
 
 ################################################
 #
+# Define a portable function _fizsh_cp_u which should implement
+# a portable version of cp -u (from the gnu coreutils)
+#
+function _fizsh_cp_u () {
+  if [[ ! -f $2 || $1 -nt $2 ]] then;
+    cp -p $1 $2
+  fi
+}
+
+################################################
+#
 # Set the fizsh dot dir, the bin dir and the sysconf (etc) dir
 #
 export _fizsh_F_DOT_DIR=$HOME/.fizsh
@@ -42,8 +53,8 @@ _fizsh_F_FIZSH_INSTALLED_AND_ON_PATH=$(type $_fizsh_F_FIZSH)
 [[ "$?" -ne 0 ]] && echo "_fizsh: Make sure that fizsh is installed correctly and that your path is set accordingly" && exit 1
 
 export _fizsh_F_FIZSH_FULL_PATH=$(which $_fizsh_F_FIZSH)
-export _fizsh_F_BIN_DIR=$(echo $_fizsh_F_FIZSH_FULL_PATH | sed -e "s/\/$_fizsh_F_FIZSH//i")
-export _fizsh_F_ETC_DIR=$(echo $_fizsh_F_BIN_DIR | sed -e "s/bin/etc/i")/$_fizsh_F_FIZSH
+export _fizsh_F_BIN_DIR=$(echo $_fizsh_F_FIZSH_FULL_PATH | sed -e "s/\/$_fizsh_F_FIZSH//")
+export _fizsh_F_ETC_DIR=$(echo $_fizsh_F_BIN_DIR | sed -e "s/bin/etc/")/$_fizsh_F_FIZSH
 [[ $_fizsh_F_ETC_DIR == "/usr/etc/$_fizsh_F_FIZSH" ]] && export _fizsh_F_ETC_DIR="/etc/$_fizsh_F_FIZSH" # needed on systems like Debian
 
 ################################################
@@ -141,17 +152,17 @@ elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
     touch $_fizsh_F_DOT_DIR/.fizshrc
     chmod +x $_fizsh_F_DOT_DIR/.fizshrc
   fi
-  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_PROMPT $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT
-  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_SEARCH $_fizsh_F_DOT_DIR/$_fizsh_F_SEARCH
-  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_SYNTAX $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
-  cp -u $_fizsh_F_ETC_DIR/brackets-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
-  cp -u $_fizsh_F_ETC_DIR/cursor-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh
-  cp -u $_fizsh_F_ETC_DIR/main-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
-  cp -u $_fizsh_F_ETC_DIR/pattern-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
-  cp -u $_fizsh_F_ETC_DIR/root-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
-  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_MISC $_fizsh_F_DOT_DIR/$_fizsh_F_MISC
-  cp -u $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH
-  cp -u $_fizsh_F_ETC_DIR/$_fizsh_F_FIZSHRC $_fizsh_F_DOT_DIR/.zshrc
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/$_fizsh_F_PROMPT $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/$_fizsh_F_SEARCH $_fizsh_F_DOT_DIR/$_fizsh_F_SEARCH
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/$_fizsh_F_SYNTAX $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/brackets-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/cursor-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/main-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/pattern-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/root-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/$_fizsh_F_MISC $_fizsh_F_DOT_DIR/$_fizsh_F_MISC
+  _fizsh_cp_u $_fizsh_F_BIN_DIR/$_fizsh_F_FIZSH $_fizsh_F_DOT_DIR/$_fizsh_F_FIZSH
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/$_fizsh_F_FIZSHRC $_fizsh_F_DOT_DIR/.zshrc
   export ZDOTDIR=$_fizsh_F_DOT_DIR
   _fizsh-welcome-message
   if [[ ( $@ == "" ) ]]; then
