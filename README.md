@@ -17,9 +17,11 @@ In order to install FIZSH, you may run the following:
 
     user@localmachine$ cd ./fizsh/fizsh-dev
 
-    user@localmachine$ ./configure # or ./configure --prefix=/usr --includedir=/usr/include --datadir=/usr/share \
-                                                    --bindir=/usr/bin --libexecdir=/usr/lib/fizsh \
-						    --localstatedir=/var --sysconfdir=/etc/
+    user@localmachine$ ./configure 
+
+    user@localmachine$ # or ./configure --prefix=/usr --includedir=/usr/include --datadir=/usr/share \
+                                        --bindir=/usr/bin --libexecdir=/usr/lib/fizsh \
+				        --localstatedir=/var --sysconfdir=/etc/
 						    
     checking for a BSD-compatible install... /usr/bin/install -c
     ...
