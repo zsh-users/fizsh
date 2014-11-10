@@ -11,7 +11,7 @@ In order to install FIZSH, you may run the following:
 
     user@localmachine$ mkdir ./fizsh 
 
-    user@localmachine$ git clone git@github.com:zsh-users/fizsh
+    user@localmachine$ git clone https://github.com/zsh-users/fizsh.git
     Initialized empty Git repository in /path/to/fizsh/.git/
     ...
 
