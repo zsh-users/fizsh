@@ -15,7 +15,7 @@ In order to install FIZSH, you may run the following:
     Initialized empty Git repository in /path/to/fizsh/.git/
     ...
 
-    user@localmachine$ cd ./fizsh/fizsh-dev
+    user@localmachine$ cd ./fizsh
 
     user@localmachine$ ./configure 
 
@@ -37,7 +37,7 @@ In order to install FIZSH, you may run the following:
     user@localmachine$ fizsh     
     Welcome to fizsh, the friendly interactive zshell
     Type man fizsh for instructions on how to use fizsh
-    user@localmachine /p/t/f/fizsh-dev> 
+    user@localmachine /p/t/fizsh> 
 
 
 Those without access to a privileged account may install fizsh in their home directory:
@@ -48,7 +48,7 @@ Those without access to a privileged account may install fizsh in their home dir
     user@localmachine$ fizsh     
     Welcome to fizsh, the friendly interactive zshell
     Type man fizsh for instructions on how to use fizsh
-    user@localmachine /p/t/f/fizsh-dev> 
+    user@localmachine /p/t/fizsh> 
 
 
 Users on Debian based systems can install the latest binary package from [Sourceforge][1]: 
@@ -66,7 +66,7 @@ Users on Debian based systems can install the latest binary package from [Source
     user@localmachine /p/t/current_dir> 
 
 
-Users of "Debian" and "Ubunu" may simply run: 
+Users of "Debian" and "Ubuntu" may simply run: 
 
     user@localmachine$ sudo apt-get install fizsh
     Reading package lists... Done
@@ -83,7 +83,7 @@ uninstall
 
 In order to uninstall FIZSH, run:
 
-    user@localmachine /p/t/f/fizsh-dev> sudo make uninstall
+    user@localmachine /p/t/fizsh> sudo make uninstall
     Making uninstall in src
     ...
 
