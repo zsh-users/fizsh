@@ -43,7 +43,28 @@
 #
 # Set the environment variables
 #
-0=fizsh # Trick to let people check wether fizsh is running, i.e. whether $0 is "fizsh"
+# copy "$_fizsh_F_LOGIN_FLAG_SET" to a local environment variable called "$_fizsh_F_LOCAL_LOGIN_FLAG_SET" 
+#
+_fizsh_F_LOCAL_LOGIN_FLAG_SET=$_fizsh_F_LOGIN_FLAG_SET
+#
+# unset the global environment variable "_fizsh_F_LOGIN_FLAG_SET", so that it can be used again in subshells started from here: 
+# 
+unset _fizsh_F_LOGIN_FLAG_SET
+#
+# if $SHLVL is equal to 2 this is an intrinsic login shell (i.e. started by "login") 
+#
+if [[ $SHLVL -eq 2 ]]; then; # fizsh is running as an intrinsic login shell 
+  0="-fizsh" 
+fi
+#
+if [[ $_fizsh_F_LOCAL_LOGIN_FLAG_SET -eq 1 ]]; then; # fizsh should be running as an login shell, because it has been called with the "--login" or "-l" option 
+  0="-fizsh" 
+fi 
+#
+if [[ $SHLVL -ne 2 && $_fizsh_F_LOCAL_LOGIN_FLAG_SET -ne 1 ]]; then; # fizsh is and should be running as a non-login shell. 
+  0="fizsh" 
+fi 
+#
 SHELL=$(which fizsh)
 
 ################################################
@@ -181,5 +202,5 @@ source $_fizsh_F_DOT_DIR/.fizshrc
 #
 [[ $+_fizsh_F_OLD_ZDOTDIR -eq 1 ]] && export ZDOTDIR=$_fizsh_F_OLD_ZDOTDIR
 # if _fizsh_F_OLD_ZDOTDIR was exported, we use it to restore the value of ZDOTDIR
-[[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR
+[[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR || true 
 # if _fizsh_F_OLD_ZDOTDIR was not exported, ZDOTDIR did not exist before fizsh was called. So we unset it
