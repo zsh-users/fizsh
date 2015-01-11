@@ -202,5 +202,8 @@ source $_fizsh_F_DOT_DIR/.fizshrc
 #
 [[ $+_fizsh_F_OLD_ZDOTDIR -eq 1 ]] && export ZDOTDIR=$_fizsh_F_OLD_ZDOTDIR
 # if _fizsh_F_OLD_ZDOTDIR was exported, we use it to restore the value of ZDOTDIR
-[[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR || true 
-# if _fizsh_F_OLD_ZDOTDIR was not exported, ZDOTDIR did not exist before fizsh was called. So we unset it
+[[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR 
+# if _fizsh_F_OLD_ZDOTDIR was not exported, ZDOTDIR did not exist before fizsh was called. So we unset it. 
+true 
+# We also make sure that the last command of this script succeeds, so that fizsh always starts up with "$?" 
+# equal to 0. 
