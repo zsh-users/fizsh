@@ -50,6 +50,8 @@ export _fizsh_F_DOT_DIR=$HOME/.fizsh
 export _fizsh_F_FIZSH=fizsh
 
 export _fizsh_F_EXEC_DIR=$(dirname "$0")
+[[ $_fizsh_F_EXEC_DIR == "." ]] && export _fizsh_F_EXEC_DIR=$(pwd) # if we happen to be in $_fizsh_F_EXEC_DIR
+
 
 _fizsh_F_FIZSH_INSTALLED_AND_ON_PATH=$(type $_fizsh_F_FIZSH)
 if [[ "$?" -ne 0 ]]; then
