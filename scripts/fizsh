@@ -49,8 +49,17 @@ export _fizsh_F_DOT_DIR=$HOME/.fizsh
 
 export _fizsh_F_FIZSH=fizsh
 
+export _fizsh_F_EXEC_DIR=$(dirname "$0")
+
 _fizsh_F_FIZSH_INSTALLED_AND_ON_PATH=$(type $_fizsh_F_FIZSH)
-[[ "$?" -ne 0 ]] && echo "_fizsh: Make sure that fizsh is installed correctly and that your path is set accordingly" && exit 1
+if [[ "$?" -ne 0 ]]; then
+  export PATH=$_fizsh_F_EXEC_DIR:$PATH
+  _fizsh_F_FIZSH_INSTALLED_AND_ON_PATH=$(type $_fizsh_F_FIZSH)
+  if [[ "$?" -ne 0 ]]; then # actually, this should never happen
+    echo "_fizsh: Make sure that fizsh is installed correctly and that your path is set accordingly"
+    exit 1
+  fi
+fi
 
 export _fizsh_F_FIZSH_FULL_PATH=$(which $_fizsh_F_FIZSH)
 export _fizsh_F_BIN_DIR=$(echo $_fizsh_F_FIZSH_FULL_PATH | sed -e "s/\/$_fizsh_F_FIZSH//")
