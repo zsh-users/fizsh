@@ -78,6 +78,17 @@ Users of "Debian" and "Ubuntu" may simply run:
 
 Debian / Sid tends to contain a more recent version of Fizsh.
 
+Users of "Arch" can find a package at https://aur.archlinux.org/packages/fizsh-git/.
+To install it run:
+
+    user@localmachine$ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/fizsh-git.tar.gz"  
+    user@localmachine$ tar xvfz fizsh-git.tar.gz
+    user@localmachine$ cd fizsh-git
+    user@localmachine$ makepkg -s
+    user@localmachine$ sudo pacman -U fizsh-git-1.0.8.r8.g95d0050-1-any.pkg.tar.xz
+
+Please notice that the name of package archive ("fizsh-git-1.0.8.r8.g95d0050-1-any.pkg.tar.xz" in the example above) can change from version to version.
+    
 uninstall
 =========
 
@@ -94,5 +105,14 @@ Those who have installed fizsh through a Debian-based package manager, such as d
     (Reading database ... 399874 files and directories currently installed.)
     ...
 
+To delete the fizsh package on "Arch" users can run:
+
+    user@localmachine /p/t/current_dir> sudo pacman -R fizsh-git
+    
+or
+
+    user@localmachine /p/t/current_dir> sudo pacman -Rs fizsh-git
+
+to delete the package with all its dependencies.
 
 [1]: http://sourceforge.net/projects/fizsh
