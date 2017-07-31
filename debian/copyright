@@ -4,7 +4,7 @@ Upstream-Contact: Guido van Steen <vansteen@users.sourceforge.net>
 Source: http://sourceforge.net/projects/fizsh/
 
 Files: *
-Copyright: 2011-2014 Guido van Steen <vansteen@users.sourceforge.net>
+Copyright: 2011-2017 Guido van Steen <vansteen@users.sourceforge.net>
 License: BSD-3-clause
 
 Files: scripts/*highlighter*
@@ -16,7 +16,9 @@ Copyright: 2009, Peter Stephenson <p.w.stephenson@ntlworld.com>
            2011, Guido van Steen <vansteen@users.sourceforge.net>
            2011, Suraj N. Kurapati <sunaku@gmail.com>
            2011, Sorin Ionescu <sorin.ionescu@gmail.com>
-           2011, Vincent Guerci <unknown @ unknown . unknown>
+           2011, Vincent Guerci <unknown@unknown.unknown>
+           2016, Geza Lore <gezalore@gmail.com>
+           2017, Bengt Brodersen <unknown@unknown.unknown>
 License: BSD-3-clause
 
 License: BSD-3-clause
