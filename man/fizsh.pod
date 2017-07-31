@@ -39,7 +39,7 @@ MATLAB is a registered trademark of The MathWorks, Inc.
 
 =head1 AUTHOR
 
-Guido van Steen, based on work by the "zsh-syntax-highlighting contributors" and the contributors to "zsh-history-substring-search". The also author gratefully acknowledges http://www.zsh.org/mla/users/2011/msg00734.html.
+Guido van Steen, based on work by the "zsh-syntax-highlighting contributors" and the contributors to "zsh-history-substring-search". The author also gratefully acknowledges http://www.zsh.org/mla/users/2011/msg00734.html.
 
 =head1 SEE ALSO
 

@@ -148,7 +148,7 @@ function _fizsh-goodbye-message () {
 # Fizsh can be called with two optons: "-v"/"--version", "-h"/"--help".
 #
 #
-# Fizsh can be called with three optons: "-v"/"--version", "-h"/"--help" and "-l"/"--login".
+# Fizsh can be called with three options: "-v"/"--version", "-h"/"--help" and "-l"/"--login".
 #
 if [[ ( $@ == "--version" ) || ( $@ == "-v" ) ]]; then
   echo "fizsh, version "$_fizsh_F_LOCAL_VERSION
@@ -183,7 +183,7 @@ elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
   else 
     export _fizsh_F_LOGIN_FLAG_SET=0
   fi 
-  # not that $_fizsh_F_LOGIN_FLAG_SET will be unset later in "fizshrc.zsh", 
+  # note that $_fizsh_F_LOGIN_FLAG_SET will be unset later in "fizshrc.zsh", 
   # after it has been copied locally to $_fizsh_F_LOCAL_LOGIN_FLAG_SET 
   _fizsh-welcome-message
   if [[ ( $SHLVL -eq 1 ) || ( $_fizsh_F_LOGIN_FLAG_SET -eq 1 ) ]]; then # note that the following calls to zsh will increase $SHLVL by 1. 

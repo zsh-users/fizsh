@@ -1,4 +1,4 @@
-The file fizsh.1 has be created from fizsh.pod using pod2man.
+The file fizsh.1 must be created from fizsh.pod using pod2man.
 
 * To construct it use the following command:
 
