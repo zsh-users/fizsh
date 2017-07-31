@@ -28,33 +28,17 @@
 # -------------------------------------------------------------------------------------------------
 
 
-# List of keyword and color pairs.
-typeset -gA ZSH_HIGHLIGHT_PATTERNS
+# Define default styles.
+: ${ZSH_HIGHLIGHT_STYLES[line]:=}
 
-# Whether the pattern highlighter should be called or not.
-_zsh_highlight_highlighter_pattern_predicate()
+# Whether the root highlighter should be called or not.
+_zsh_highlight_highlighter_line_predicate()
 {
   _zsh_highlight_buffer_modified
 }
 
-# Pattern syntax highlighting function.
-_zsh_highlight_highlighter_pattern_paint()
+# root highlighting function.
+_zsh_highlight_highlighter_line_paint()
 {
-  setopt localoptions extendedglob
-  local pattern
-  for pattern in ${(k)ZSH_HIGHLIGHT_PATTERNS}; do
-    _zsh_highlight_pattern_highlighter_loop "$BUFFER" "$pattern"
-  done
-}
-
-_zsh_highlight_pattern_highlighter_loop()
-{
-  # This does *not* do its job syntactically, sorry.
-  local buf="$1" pat="$2"
-  local -a match mbegin mend
-  local MATCH; integer MBEGIN MEND
-  if [[ "$buf" == (#b)(*)(${~pat})* ]]; then
-    region_highlight+=("$((mbegin[2] - 1)) $mend[2] $ZSH_HIGHLIGHT_PATTERNS[$pat]")
-    "$0" "$match[1]" "$pat"; return $?
-  fi
+  _zsh_highlight_add_highlight 0 $#BUFFER line
 }
