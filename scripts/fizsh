@@ -101,6 +101,7 @@ if [[ $_fizsh_F_LOCAL_VERSION != $_fizsh_F_CENTRAL_VERSION ]]; then
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh
+  rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/line/line-highlighter.zsh
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
@@ -159,6 +160,7 @@ elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
   mkdir -p $_fizsh_F_DOT_DIR
   mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets
   mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor
+  mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/line
   mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main
   mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern
   mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root
@@ -171,6 +173,7 @@ elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
   _fizsh_cp_u $_fizsh_F_ETC_DIR/$_fizsh_F_SYNTAX $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
   _fizsh_cp_u $_fizsh_F_ETC_DIR/brackets-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets/brackets-highlighter.zsh
   _fizsh_cp_u $_fizsh_F_ETC_DIR/cursor-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor/cursor-highlighter.zsh
+  _fizsh_cp_u $_fizsh_F_ETC_DIR/line-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/line/line-highlighter.zsh
   _fizsh_cp_u $_fizsh_F_ETC_DIR/main-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/main/main-highlighter.zsh
   _fizsh_cp_u $_fizsh_F_ETC_DIR/pattern-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/pattern/pattern-highlighter.zsh
   _fizsh_cp_u $_fizsh_F_ETC_DIR/root-highlighter.zsh $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/root/root-highlighter.zsh
