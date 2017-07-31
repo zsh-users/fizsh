@@ -161,6 +161,13 @@ function _fizsh-create-zlogout () {
 
 ################################################
 #
+# Create .version and .revision-hash (needed for zsh-syntax-highlighting)
+#
+[[ !(-f $_fizsh_F_DOT_DIR/.version) ]] && touch $_fizsh_F_DOT_DIR/.version
+[[ !(-f $_fizsh_F_DOT_DIR/.revision-hash) ]] && touch $_fizsh_F_DOT_DIR/.revision-hash
+
+################################################
+#
 # Fizsh can be called with three options: "-v"/"--version", "-h"/"--help" and "-l"/"--login".
 #
 if [[ ( $@ == "--version" ) || ( $@ == "-v" ) ]]; then
