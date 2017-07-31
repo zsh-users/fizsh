@@ -1,6 +1,6 @@
 *** Apart from the files ./etc/fizsh/zsh-syntax-highlighting.zsh, ./etc/fizsh/brackets-highlighter.zsh, ./etc/fizsh/cursor-highlighter.zsh, ./etc/fizsh/line-highlighter.zsh, ./etc/fizsh/main-highlighter.zsh, ./etc/fizsh/pattern-highlighter.zsh, ./etc/fizsh/root-highlighter.zsh and ./etc/fizsh/zsh-history-substring-search.zsh, fizsh is released under the following BSD license:
 
-Copyright (c) 2011-2014 Guido van Steen
+Copyright (c) 2011 - 2017 Guido van Steen
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -42,7 +42,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##############################################################################
 #
 # Copyright (c) 2009 Peter Stephenson
-# Copyright (c) 2011 Guido van Steen
+# Copyright (c) 2011 - 2017 Guido van Steen
 # Copyright (c) 2011 Suraj N. Kurapati
 # Copyright (c) 2011 Sorin Ionescu
 # Copyright (c) 2011 Vincent Guerci

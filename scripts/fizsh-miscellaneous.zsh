@@ -3,7 +3,7 @@
 # /etc/fizsh-miscellaneous.zsh
 #
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2011 - 2014 Guido van Steen
+# Copyright (c) 2011 - 2017 Guido van Steen
 # All rights reserved.
 #
 #

@@ -2,6 +2,6 @@ The file fizsh.1 must be created from fizsh.pod using pod2man.
 
 * To construct it use the following command:
 
-$ pod2man --utf8 -c "" -r "fizsh 1.0.8" ./fizsh.pod > ./fizsh.1
+$ pod2man --utf8 -c "" -r "fizsh 1.0.9" ./fizsh.pod > ./fizsh.1
 
 * This is what happens in Makefile.am

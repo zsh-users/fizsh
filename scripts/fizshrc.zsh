@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2011 Guido van Steen
+# Copyright (c) 2011 - 2017 Guido van Steen
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are permitted

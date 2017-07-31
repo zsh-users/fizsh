@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Copyright (c) 2009 Peter Stephenson
-# Copyright (c) 2011 Guido van Steen
+# Copyright (c) 2011 - 2017 Guido van Steen
 # Copyright (c) 2011 Suraj N. Kurapati
 # Copyright (c) 2011 Sorin Ionescu
 # Copyright (c) 2011 Vincent Guerci
