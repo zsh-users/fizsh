@@ -1,3 +1,21 @@
+fizsh (1.0.9) UPSTREAM; urgency=low
+
+  * Release: 1.0.9
+
+  * Update to latest version of zsh-history-substring-search
+
+  * Update to latest version of zsh-syntax-highlighting
+
+  * Use exec instead of fork when starting zsh
+
+  * Move login and goodbye to .zprofile and .zlogout
+
+  * Turn zsh into an alias so that it does call fizsh
+
+  * Make prompt code more readable and reliable
+
+  * Tidy some existing code
+
 fizsh (1.0.8) UPSTREAM; urgency=low
 
   * Release: 1.0.8
