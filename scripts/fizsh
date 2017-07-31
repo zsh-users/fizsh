@@ -112,12 +112,19 @@ fi
 
 ################################################
 #
-# Print the welcome message
+# Create .zprofile 
 #
-function _fizsh-welcome-message () {
-  echo 'welcome to fizsh, the friendly interactive zshell'
-  echo -e 'type \033[03;32mman fizsh\033[00m for instructions on how to use fizsh'
+function _fizsh-create-zprofile () {
+  echo "################################################" > $_fizsh_F_DOT_DIR/.zprofile
+  echo "#" >> $_fizsh_F_DOT_DIR/.zprofile
+  echo "function _fizsh-login-message () {" >> $_fizsh_F_DOT_DIR/.zprofile
+  echo "  echo 'welcome to fizsh, the friendly interactive zshell'" >> $_fizsh_F_DOT_DIR/.zprofile
+  echo "  print -P 'type %F{green}fizsh%F{reset} for instructions on how to use fizsh'" >> $_fizsh_F_DOT_DIR/.zprofile
+  echo "}" >> $_fizsh_F_DOT_DIR/.zprofile
+  echo "" >> $_fizsh_F_DOT_DIR/.zprofile
+  echo "_fizsh-login-message" >> $_fizsh_F_DOT_DIR/.zprofile
 }
+[[ !(-f $_fizsh_F_DOT_DIR/.zprofile) ]] && _fizsh-create-zprofile
 
 ################################################
 #
@@ -135,12 +142,22 @@ function _fizsh-usage-message () {
 
 ################################################
 #
-# Print the goodbye message
+# Create .zlogout 
 #
-function _fizsh-goodbye-message () {
-  echo ''
-  echo 'Goodbye'
+function _fizsh-create-zlogout () {
+  echo "################################################" > $_fizsh_F_DOT_DIR/.zlogout
+  echo "#" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "# Print the goodbye message" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "#" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "function _fizsh-goodbye-message () {" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "  echo ''" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "  echo 'Goodbye'" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "  exit" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "}" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "" >> $_fizsh_F_DOT_DIR/.zlogout
+  echo "_fizsh-goodbye-message" >> $_fizsh_F_DOT_DIR/.zlogout
 }
+[[ !(-f $_fizsh_F_DOT_DIR/.zlogout) ]] && _fizsh-create-zlogout
 
 ################################################
 #
