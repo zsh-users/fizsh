@@ -182,5 +182,5 @@ elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
     exec -a fizsh zsh
   fi
 else
-  zsh $@ # this makes sure that fizsh also works with ssh, sftp and so on.
+  zsh "$@" # this makes sure that fizsh also works with ssh, sftp and so on.
 fi
