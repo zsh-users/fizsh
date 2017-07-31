@@ -43,27 +43,27 @@
 #
 # Set the environment variables
 #
-# copy "$_fizsh_F_LOGIN_FLAG_SET" to a local environment variable called "$_fizsh_F_LOCAL_LOGIN_FLAG_SET" 
+# copy "$_fizsh_F_LOGIN_FLAG_SET" to a local environment variable called "$_fizsh_F_LOCAL_LOGIN_FLAG_SET"
 #
 _fizsh_F_LOCAL_LOGIN_FLAG_SET=$_fizsh_F_LOGIN_FLAG_SET
 #
-# unset the global environment variable "_fizsh_F_LOGIN_FLAG_SET", so that it can be used again in subshells started from here: 
-# 
+# unset the global environment variable "_fizsh_F_LOGIN_FLAG_SET", so that it can be used again in subshells started from here:
+#
 unset _fizsh_F_LOGIN_FLAG_SET
 #
-# if $SHLVL is equal to 2 this is an intrinsic login shell (i.e. started by "login") 
+# if $SHLVL is equal to 2 this is an intrinsic login shell (i.e. started by "login")
 #
-if [[ $SHLVL -eq 2 ]]; then; # fizsh is running as an intrinsic login shell 
-  0="-fizsh" 
+if [[ $SHLVL -eq 2 ]]; then; # fizsh is running as an intrinsic login shell
+  0="-fizsh"
 fi
 #
-if [[ $_fizsh_F_LOCAL_LOGIN_FLAG_SET -eq 1 ]]; then; # fizsh should be running as an login shell, because it has been called with the "--login" or "-l" option 
-  0="-fizsh" 
-fi 
+if [[ $_fizsh_F_LOCAL_LOGIN_FLAG_SET -eq 1 ]]; then; # fizsh should be running as an login shell, because it has been called with the "--login" or "-l" option
+  0="-fizsh"
+fi
 #
-if [[ $SHLVL -ne 2 && $_fizsh_F_LOCAL_LOGIN_FLAG_SET -ne 1 ]]; then; # fizsh is and should be running as a non-login shell. 
-  0="fizsh" 
-fi 
+if [[ $SHLVL -ne 2 && $_fizsh_F_LOCAL_LOGIN_FLAG_SET -ne 1 ]]; then; # fizsh is and should be running as a non-login shell.
+  0="fizsh"
+fi
 #
 SHELL=$(which fizsh)
 
@@ -189,7 +189,7 @@ source $_fizsh_F_DOT_DIR/fizsh-miscellaneous.zsh
 # for some reason sourcing the prompt as a function from a file
 # does not work properly: after a while the prompt gets out of sync
 # the same thing seems to happen when we use the precmd function
-# to echo the prompt. A bug in ZSH!? Anyway, for this reason 
+# to echo the prompt. A bug in ZSH!? Anyway, for this reason
 # source $_fizsh_F_DOT_DIR/fizsh-prompt.zsh has been commented out.
 #
 #source $_fizsh_F_DOT_DIR/fizsh-prompt.zsh
@@ -202,8 +202,8 @@ source $_fizsh_F_DOT_DIR/.fizshrc
 #
 [[ $+_fizsh_F_OLD_ZDOTDIR -eq 1 ]] && export ZDOTDIR=$_fizsh_F_OLD_ZDOTDIR
 # if _fizsh_F_OLD_ZDOTDIR was exported, we use it to restore the value of ZDOTDIR
-[[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR 
-# if _fizsh_F_OLD_ZDOTDIR was not exported, ZDOTDIR did not exist before fizsh was called. So we unset it. 
-true 
-# We also make sure that the last command of this script succeeds, so that fizsh always starts up with "$?" 
-# equal to 0. 
+[[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR
+# if _fizsh_F_OLD_ZDOTDIR was not exported, ZDOTDIR did not exist before fizsh was called. So we unset it.
+true
+# We also make sure that the last command of this script succeeds, so that fizsh always starts up with "$?"
+# equal to 0.

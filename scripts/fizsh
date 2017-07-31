@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh 
+#!/usr/bin/env zsh
 #
 # /usr/bin/fizsh
 #
@@ -95,7 +95,7 @@ export _fizsh_F_LOCAL_VERSION=$(cat $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE)
 #
 # If a new central version is detected (for the first time) the old config files are removed
 #
-if [[ $_fizsh_F_LOCAL_VERSION != $_fizsh_F_CENTRAL_VERSION ]]; then 
+if [[ $_fizsh_F_LOCAL_VERSION != $_fizsh_F_CENTRAL_VERSION ]]; then
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_PROMPT
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_SEARCH
   rm -rf $_fizsh_F_DOT_DIR/$_fizsh_F_SYNTAX
@@ -109,7 +109,7 @@ if [[ $_fizsh_F_LOCAL_VERSION != $_fizsh_F_CENTRAL_VERSION ]]; then
   rm -rf $_fizsh_F_DOT_DIR/.zshrc
   export _fizsh_F_LOCAL_VERSION=$_fizsh_F_CENTRAL_VERSION
   echo $_fizsh_F_LOCAL_VERSION > $_fizsh_F_DOT_DIR/$_fizsh_F_VERSION_FILE
-fi 
+fi
 
 ################################################
 #
@@ -180,17 +180,17 @@ elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
   export ZDOTDIR=$_fizsh_F_DOT_DIR
   if [[ ( $@ == "--login" ) || ( $@ == "-l" ) ]]; then
     export _fizsh_F_LOGIN_FLAG_SET=1
-  else 
-    export _fizsh_F_LOGIN_FLAG_SET=0
-  fi 
-  # note that $_fizsh_F_LOGIN_FLAG_SET will be unset later in "fizshrc.zsh", 
-  # after it has been copied locally to $_fizsh_F_LOCAL_LOGIN_FLAG_SET 
-  _fizsh-welcome-message
-  if [[ ( $SHLVL -eq 1 ) || ( $_fizsh_F_LOGIN_FLAG_SET -eq 1 ) ]]; then # note that the following calls to zsh will increase $SHLVL by 1. 
-    zsh -l 
   else
-    zsh 
-  fi 
+    export _fizsh_F_LOGIN_FLAG_SET=0
+  fi
+  # note that $_fizsh_F_LOGIN_FLAG_SET will be unset later in "fizshrc.zsh",
+  # after it has been copied locally to $_fizsh_F_LOCAL_LOGIN_FLAG_SET
+  _fizsh-welcome-message
+  if [[ ( $SHLVL -eq 1 ) || ( $_fizsh_F_LOGIN_FLAG_SET -eq 1 ) ]]; then # note that the following calls to zsh will increase $SHLVL by 1.
+    zsh -l
+  else
+    zsh
+  fi
   _fizsh-goodbye-message
   [[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && unset ZDOTDIR
   [[ $+_fizsh_F_OLD_ZDOTDIR -eq 1 ]] && ZDOTDIR=$_fizsh_F_OLD_ZDOTDIR

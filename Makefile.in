@@ -199,7 +199,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = gnu
 SUBDIRS = doc man scripts
-EXTRA_DIST = doc man scripts 
+EXTRA_DIST = doc man scripts
 all: all-recursive
 
 .SUFFIXES:

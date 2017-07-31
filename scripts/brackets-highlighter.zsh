@@ -98,7 +98,7 @@ _zsh_highlight_brackets_highlighter()
   fi
 }
 
-# Helper function to differentiate type 
+# Helper function to differentiate type
 _zsh_highlight_brackets_highlighter_brackettype()
 {
   case $1 in

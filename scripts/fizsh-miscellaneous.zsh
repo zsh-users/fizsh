@@ -158,7 +158,7 @@ function _fizsh-resource-config-files() {
 #
 # Define fizsh-reinstall
 #
-# the user may call this function in order to reinstall all the 
+# the user may call this function in order to reinstall all the
 # configuration files from "$sysconfdir/fizsh" to "$HOME/.fizsh"
 # use "--force" to" skip the are you sure question
 #

@@ -7,9 +7,9 @@ FIZSH is the Friendly Interactive ZSHell. It is a front end to ZSH. It provides 
 install
 =======
 
-In order to install FIZSH, you may run the following: 
+In order to install FIZSH, you may run the following:
 
-    user@localmachine$ mkdir ./fizsh 
+    user@localmachine$ mkdir ./fizsh
 
     user@localmachine$ git clone https://github.com/zsh-users/fizsh.git
     Initialized empty Git repository in /path/to/fizsh/.git/
@@ -17,12 +17,12 @@ In order to install FIZSH, you may run the following:
 
     user@localmachine$ cd ./fizsh
 
-    user@localmachine$ ./configure 
+    user@localmachine$ ./configure
 
     user@localmachine$ # or ./configure --prefix=/usr --includedir=/usr/include --datadir=/usr/share \
                                         --bindir=/usr/bin --libexecdir=/usr/lib/fizsh \
                                         --localstatedir=/var --sysconfdir=/etc/
-						    
+
     checking for a BSD-compatible install... /usr/bin/install -c
     ...
 
@@ -34,10 +34,10 @@ In order to install FIZSH, you may run the following:
     Making install in src
     ...
 
-    user@localmachine$ fizsh     
+    user@localmachine$ fizsh
     Welcome to fizsh, the friendly interactive zshell
     Type man fizsh for instructions on how to use fizsh
-    user@localmachine /p/t/fizsh> 
+    user@localmachine /p/t/fizsh>
 
 
 Those without access to a privileged account may install fizsh in their home directory:
@@ -45,15 +45,15 @@ Those without access to a privileged account may install fizsh in their home dir
     user@localmachine$ export PATH=$PATH:$HOME/bin && ./configure --prefix=$HOME && make && make install
     ...
 
-    user@localmachine$ fizsh     
+    user@localmachine$ fizsh
     Welcome to fizsh, the friendly interactive zshell
     Type man fizsh for instructions on how to use fizsh
-    user@localmachine /p/t/fizsh> 
+    user@localmachine /p/t/fizsh>
 
 
-Users on Debian based systems can install the latest binary package from [Sourceforge][1]: 
+Users on Debian based systems can install the latest binary package from [Sourceforge][1]:
 
-    user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.8-1_all.deb \ 
+    user@localmachine$ wget --no-check-certificate --output-document=fizsh_1.0.8-1_all.deb \
                            "https://downloads.sourceforge.net/project/fizsh/fizsh_1.0.8-1_all.deb"
 
     user@localmachine$ sudo dpkg -i ./fizsh_1.0.8-1_all.deb
@@ -63,10 +63,10 @@ Users on Debian based systems can install the latest binary package from [Source
     user@localmachine$ fizsh
     Welcome to fizsh, the friendly interactive zshell
     Type man fizsh for instructions on how to use fizsh
-    user@localmachine /p/t/current_dir> 
+    user@localmachine /p/t/current_dir>
 
 
-Users of "Debian" and "Ubuntu" may simply run: 
+Users of "Debian" and "Ubuntu" may simply run:
 
     user@localmachine$ sudo apt-get install fizsh
     Reading package lists... Done
@@ -81,14 +81,14 @@ Debian / Sid tends to contain a more recent version of Fizsh.
 Users of "Arch" can find a package at https://aur.archlinux.org/packages/fizsh-git/.
 To install it run:
 
-    user@localmachine$ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/fizsh-git.tar.gz"  
+    user@localmachine$ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/fizsh-git.tar.gz"
     user@localmachine$ tar xvfz fizsh-git.tar.gz
     user@localmachine$ cd fizsh-git
     user@localmachine$ makepkg -s
     user@localmachine$ sudo pacman -U fizsh-git-1.0.8.r8.g95d0050-1-any.pkg.tar.xz
 
 Please notice that the name of package archive ("fizsh-git-1.0.8.r8.g95d0050-1-any.pkg.tar.xz" in the example above) can change from version to version.
-    
+
 uninstall
 =========
 
@@ -108,7 +108,7 @@ Those who have installed fizsh through a Debian-based package manager, such as d
 To delete the fizsh package on "Arch" users can run:
 
     user@localmachine /p/t/current_dir> sudo pacman -R fizsh-git
-    
+
 or
 
     user@localmachine /p/t/current_dir> sudo pacman -Rs fizsh-git
