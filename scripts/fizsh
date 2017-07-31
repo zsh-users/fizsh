@@ -154,7 +154,7 @@ if [[ ( $@ == "--version" ) || ( $@ == "-v" ) ]]; then
 elif [[ ( $@ == "--help" ) || ( $@ == "-h" ) ]]; then
   _fizsh-usage-message
 elif [[ ( $@ == "--login" ) || ( $@ == "-l" ) || ( $@ == "" ) ]]; then
-  [[ $+ZDOTDIR -eq 1 ]] && export _fizsh_F_OLD_ZDOTDIR=$ZDOTDIR
+  [[ $+ZDOTDIR -eq 1 ]] && [[ $+_fizsh_F_OLD_ZDOTDIR -eq 0 ]] && export _fizsh_F_OLD_ZDOTDIR=$ZDOTDIR
   mkdir -p $_fizsh_F_DOT_DIR
   mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/brackets
   mkdir -p $_fizsh_F_DOT_DIR/$_fizsh_F_HIGHLIGHTERS_DIR/cursor
