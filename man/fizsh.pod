@@ -33,8 +33,6 @@ There are no known bugs at the moment. Bug reports, bug fixes and other comments
 
 Fizsh will run as a login shell if it is invoked with the "-l", or if it is started by the "login" program. If fizsh is run as a login shell "$0" will be set to "-fizsh". "$0" will be "fizsh" otherwise.
 
-Fizsh has been implemented as a collection of zsh scripts. Therefore, "ps" will list instances of fizsh as "zsh" (or as "zsh /usr/bin/fizsh" in the case of "ps u").
-
 MATLAB is a registered trademark of The MathWorks, Inc.
 
 =head1 AUTHOR
