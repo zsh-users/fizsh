@@ -16,7 +16,7 @@
 # package. afterwards some cleaning is done.
 override_dh_installman:
 	mkdir -p debian/pod2man
-	pod2man --utf8 -c "" -r "fizsh 1.0.7" man/fizsh.pod > debian/pod2man/fizsh.1
+	pod2man --utf8 -c "" -r "fizsh 1.0.9" man/fizsh.pod > debian/pod2man/fizsh.1
 	dh_installman debian/pod2man/fizsh.1
 	rm -rf ./debian/pod2man/
 
