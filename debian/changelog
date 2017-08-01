@@ -1,3 +1,12 @@
+fizsh (1.0.9-1) unstable; urgency=low
+
+  * New upstream release
+  * Increased standards-version to 4.0.0. This did not cause an warnings
+  * Updated years and authors in ./debian/copyright
+  * Updated to version 1.0.9 in ./debian/rules
+
+ -- Guido van Steen <vansteen@users.sourceforge.net>  Mon, 31 Jul 2017 12:32:12 +0200
+
 fizsh (1.0.7-1) unstable; urgency=low
 
   * New upstream release 
