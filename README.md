@@ -26,7 +26,7 @@ In order to install FIZSH, you may run the following:
     checking for a BSD-compatible install... /usr/bin/install -c
     ...
 
-    user@localmachine$ make
+    user@localmachine$ make # gmake for those on BSD
     Making all in src
     ...
 
