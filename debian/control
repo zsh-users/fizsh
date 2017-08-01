@@ -1,0 +1,15 @@
+Source: fizsh
+Section: shells
+Priority: optional
+Maintainer: Guido van Steen <vansteen@users.sourceforge.net>
+Build-Depends: debhelper (>= 9), autoconf, automake, perl
+Standards-Version: 4.0.0
+Homepage: http://sourceforge.net/projects/fizsh/
+
+Package: fizsh
+Architecture: all
+Depends: ${misc:Depends}, zsh (>= 4.3.9)
+Description: Friendly Interactive ZSHell
+ Fizsh is a frontend to Zsh. It provides the user with interactive syntax
+ highlighting and a Matlab-like history search facility. At the same time it
+ can handle Bourne syntax.

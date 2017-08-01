@@ -30,19 +30,16 @@
 
 
 # Define default styles.
-: ${ZSH_HIGHLIGHT_STYLES[cursor]:=standout}
+: ${ZSH_HIGHLIGHT_STYLES[line]:=}
 
-# Whether the cursor highlighter should be called or not.
-_zsh_highlight_highlighter_cursor_predicate()
+# Whether the root highlighter should be called or not.
+_zsh_highlight_highlighter_line_predicate()
 {
-  # remove cursor highlighting when the line is finished
-  [[ $WIDGET == zle-line-finish ]] || _zsh_highlight_cursor_moved
+  _zsh_highlight_buffer_modified
 }
 
-# Cursor highlighting function.
-_zsh_highlight_highlighter_cursor_paint()
+# root highlighting function.
+_zsh_highlight_highlighter_line_paint()
 {
-  [[ $WIDGET == zle-line-finish ]] && return
-  
-  _zsh_highlight_add_highlight $CURSOR $(( $CURSOR + 1 )) cursor
+  _zsh_highlight_add_highlight 0 $#BUFFER line
 }

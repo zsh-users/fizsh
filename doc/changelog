@@ -1,14 +1,32 @@
+fizsh (1.0.9) UPSTREAM; urgency=low
+
+  * Release: 1.0.9
+
+  * Update to latest version of zsh-history-substring-search
+
+  * Update to latest version of zsh-syntax-highlighting
+
+  * Use exec instead of fork when starting zsh
+
+  * Move login and goodbye to .zprofile and .zlogout
+
+  * Turn zsh into an alias so that it does call fizsh
+
+  * Make prompt code more readable and reliable
+
+  * Tidy some existing code
+
 fizsh (1.0.8) UPSTREAM; urgency=low
 
   * Release: 1.0.8
 
   * In ./scripts/fizsh a function _fizsh_cp_u was defined to provide
-    a portable implementation of "cp -u" from GNU coreutils. 
+    a portable implementation of "cp -u" from GNU coreutils.
 
   * In ./scripts/fizsh instances of sed -e "s/bin/etc/i" were replaced
     by sed -e "s/bin/etc/"
 
-  * In ./scripts/fizshrc.zsh compinit was replaced by compinit -u. 
+  * In ./scripts/fizshrc.zsh compinit was replaced by compinit -u.
 
 fizsh (1.0.7) UPSTREAM; urgency=low
 
@@ -26,7 +44,7 @@ fizsh (1.0.7) UPSTREAM; urgency=low
 
   * Added the doc and scripts directories to EXTRA_DIST in ./Makefile.am
 
-  * Extended dist-hook in ./Makefile.am, so that that "make dist" excludes 
+  * Extended dist-hook in ./Makefile.am, so that that "make dist" excludes
     some automatically generated files
 
  -- Guido van Steen <vansteen@users.sourceforge.net>  Sat, 14 Jun 2014 22:23:47 +0200

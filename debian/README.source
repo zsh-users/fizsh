@@ -1,0 +1,135 @@
+# Copyright (c) 2011 - 2014 Guido van Steen
+# All rights reserved.
+#
+#
+# Redistribution and use in source and binary forms, with or without modification, are permitted
+# provided that the following conditions are met:
+#
+#  * Redistributions of source code must retain the above copyright notice, this list of conditions
+#    and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright notice, this list of
+#    conditions and the following disclaimer in the documentation and/or other materials provided
+#    with the distribution.
+#  * Neither the name of the FIZSH nor the names of its contributors may be used to endorse or
+#    promote products derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+# FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+# OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# -------------------------------------------------------------------------------------------------
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
+# To update fizsh one may use a workflow like this. 
+#
+# This file may be sourced. make sure debhelper, perl, autoconf, automake and devscripts 
+# are installed ("sudo apt-get install debhelper perl autoconf automake devscripts")
+
+cur_version="1.0.7"
+
+new_version="1.0.7.1"
+
+rm -rf ~/tmp_build_dir
+
+mkdir -p ~/tmp_build_dir/fizsh-$cur_version/
+
+mkdir -p /tmp/tmp_build_dir/
+
+# wget http://sourceforge.net/projects/fizsh/files/fizsh-$cur_version.tar.gz/download -O /tmp/tmp_build_dir/fizsh-$cur_version.tar.gz
+
+# wget http://sourceforge.net/projects/fizsh/files/fizsh_$cur_version-1.debian.tar.gz/download -O /tmp/tmp_build_dir/fizsh_$cur_version-1.debian.tar.gz
+
+cd ~/tmp_build_dir/
+
+cp /tmp/tmp_build_dir/fizsh-$cur_version.tar.gz ./
+
+cp /tmp/tmp_build_dir/fizsh_$cur_version-1.debian.tar.gz ./
+
+cd ./fizsh-$cur_version
+
+tar -xvf ../fizsh-$cur_version.tar.gz > /dev/null
+
+tar -xvf ../fizsh_$cur_version-1.debian.tar.gz > /dev/null
+
+cp -a ../fizsh-$cur_version ../fizsh-$new_version
+
+cd ../fizsh-$new_version
+
+# Assume that upstream makes some important changes to version $cur_version, which prompts them to release version $new_version:
+
+rm -rf ./new_entry
+sleep 0.1
+echo "fizsh ($new_version) UPSTREAM; urgency=low" > ./new_entry
+echo "" >> ./new_entry
+echo "  * Release: $new_version" >> ./new_entry
+echo "" >> ./new_entry
+echo "  * Updated the changelog" >> ./new_entry
+echo "" >> ./new_entry
+echo " -- Guido van Steen <vansteen@users.sourceforge.net>  ""$(echo $(date -R))" >> ./new_entry
+echo "" >> ./new_entry
+
+cp ./doc/changelog ./old_entries
+
+cat ./new_entry ./old_entries > ./doc/changelog
+
+rm -rf ./new_entry
+
+echo "fizsh ($new_version-1) unstable; urgency=low" > ./new_entry
+echo "" >> ./new_entry
+echo "  * New upstream release" >> ./new_entry
+echo "  * No changes required in the debian package" >> ./new_entry
+echo "" >> ./new_entry
+echo " -- Guido van Steen <vansteen@users.sourceforge.net>  ""$(echo $(date -R))" >> ./new_entry
+echo "" >> ./new_entry
+
+cp ./debian/changelog ./old_entries
+
+cat ./new_entry ./old_entries > ./debian/changelog
+
+rm -rf ./new_entry ./old_entries
+
+# replace $cur_version by $new_version where needed
+
+/usr/bin/perl -p -i -e "s/$cur_version/$new_version/g" ./configure.ac
+
+/usr/bin/perl -p -i -e "s/$cur_version/$new_version/g" ./man/README
+
+/usr/bin/perl -p -i -e "s/$cur_version/$new_version/g" ./man/Makefile.am
+
+/usr/bin/perl -p -i -e "s/$cur_version/$new_version/g" ./debian/rules
+
+/usr/bin/perl -p -i -e "s/$cur_version/$new_version/g" ./scripts/fizsh
+
+# build the new version
+
+autoreconf # in case the autoconf make files changed
+
+git archive --format=tar --prefix=fizsh-$new_version/ HEAD | (cd $(pwd)/ && tar xf -)
+
+rm -rf fizsh-$new_version/debian
+
+cd fizsh-$new_version 
+
+tar -czf ../../fizsh-$new_version.tar.gz ./
+
+cd ..
+
+rm -rf ./fizsh-$new_version
+rm -rf ./autom4te.cache
+
+cp ../fizsh-$new_version.tar.gz ../fizsh_$new_version.orig.tar.gz
+
+debuild -uc -us
+
+# run lintian
+
+lintian --display-info --display-experimental --pedantic --info --check --verbose --color auto ../fizsh_$new_version-1_*.changes
+
+# clean up
+
+./debian/rules clean

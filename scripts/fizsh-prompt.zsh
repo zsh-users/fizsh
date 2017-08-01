@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2011 Guido van Steen
+# Copyright (c) 2011 - 2017 Guido van Steen
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -31,12 +31,6 @@
 ################################################
 #
 # This file is not sourced (yet). So any garbage is automatically lost after this script completes.
-
-RED="%{"$'\033[03;31m'"%}"
-GREEN="%{"$'\033[03;32m'"%}"
-BLACK="%{"$'\033[00m'"%}"
-[[ $UID -ne 0 ]] && _fizsh_promptcolor=$GREEN && _fizsh_user_token="> "
-[[ $UID -eq 0 ]] && _fizsh_promptcolor=$RED && _fizsh_user_token="# "
 
 ################################################
 #
@@ -74,6 +68,7 @@ BLACK="%{"$'\033[00m'"%}"
   IFS=$_fizsh_saveIFS
   [[ ${_fizsh_full_path/$HOME/\~} != $_fizsh_full_path ]] && _fizsh_dyn_pwd=${_fizsh_dyn_pwd/\/~/~}
   # remove the slash in front of $HOME
-  _fizsh_prompt="%n@%m%F${_fizsh_promptcolor} $_fizsh_dyn_pwd[0,-2]${BLACK}$_fizsh_user_token%b%k%f"
+  [[ $UID -ne 0 ]] && _fizsh_prompt="%n@%m%F{green} $_fizsh_dyn_pwd[0,-2]%F{reset}> %b%k%f"
+  [[ $UID -eq 0 ]] && _fizsh_prompt="%n@%m%F{red} $_fizsh_dyn_pwd[0,-2]%F{reset}# %b%k%f"
   echo $_fizsh_prompt
 #}

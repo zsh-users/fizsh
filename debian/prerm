@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+#DEBHELPER#
+# 
+
+set -e
+
+fizsh=$(which fizsh)
+
+/etc/fizsh/modify-etc-shells.sh --remove $fizsh
+
+exit 0
