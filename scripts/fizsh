@@ -63,7 +63,7 @@ fi
 
 export _fizsh_F_FIZSH_FULL_PATH=$(which $_fizsh_F_FIZSH)
 export _fizsh_F_BIN_DIR=$(echo $_fizsh_F_FIZSH_FULL_PATH | sed -e "s/\/$_fizsh_F_FIZSH//")
-export _fizsh_F_ETC_DIR=$(echo $_fizsh_F_BIN_DIR | sed -e "s/bin/etc/")/$_fizsh_F_FIZSH
+export _fizsh_F_ETC_DIR=$(echo $_fizsh_F_BIN_DIR | sed -r "s/s?bin/etc/")/$_fizsh_F_FIZSH
 [[ $_fizsh_F_ETC_DIR == "/usr/etc/$_fizsh_F_FIZSH" ]] && export _fizsh_F_ETC_DIR="/etc/$_fizsh_F_FIZSH" # needed on systems like Debian
 _fizsh_F_PS=1; which ps > /dev/null || _fizsh_F_PS=0; export _fizsh_F_PS
 
